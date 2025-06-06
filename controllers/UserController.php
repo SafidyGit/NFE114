@@ -1,11 +1,14 @@
 <?php
-require_once '../../models/User.php';
+require_once __DIR__ . '/../../models/User.php';
 
-class UserController {
-    public function index() {
+class UserController 
+{
+    public function index() 
+    {
         
     }
-    public function create() {
+    public function create() 
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = htmlspecialchars($_POST['username']);
             $email = htmlspecialchars($_POST['email']);
@@ -17,16 +20,18 @@ class UserController {
             $userModel = new User();
             $userModel->add($username, $email, $hashedPassword, $role_id);
 
-            header('Location: views/admin/user/create.php?success=1');
+            header('Location: create.php?success=1');
             exit;
         } else {
             require 'views/admin/user/create.php';
         }
     }
-    public function update(){
+    public function update()
+    {
 
     }
-    public function delete(){
+    public function delete()
+    {
 
     }
 

@@ -17,3 +17,7 @@ if ($_SESSION['role_id'] != 1) {
 <div>
 <a href="../../index.php?action=logout">Se déconnecter</a>
 </div>
+
+<div>
+<a href="category/index.php">Liste des catégories de produits</a>
+</div>
