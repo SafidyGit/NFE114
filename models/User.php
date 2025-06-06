@@ -9,7 +9,8 @@ class User {
     }
 
     public function add($username, $email, $hashedPassword, $role_id) {
-        $sql = "INSERT INTO user (username, user_email, password, role_id) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO user (username, user_email, password, role_id) VALUES (:username, :user_email, :password, :role_id)";
+        
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$username, $email, $hashedPassword, $role_id]);
     }

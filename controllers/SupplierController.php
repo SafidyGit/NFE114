@@ -38,6 +38,7 @@ class SupplierController {
         
         }
     }
+    
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

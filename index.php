@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
+require_once __DIR__ . '/controllers/ProductController.php';
 
 $action = $_GET['action'] ?? null;
 $authController = new AuthController();
 $categoryController = new CategoryController();
+$productController = new ProductController();
 
 switch ($action) {
     case 'login':
@@ -25,6 +27,9 @@ switch ($action) {
     case 'category_delete':
         $categoryController->delete();
         break;
+    case 'product_create':
+        $productController->create();
+        break;
     default:
         header('Location: index.php?action=login');
         exit;
@@ -32,12 +37,5 @@ switch ($action) {
 
 
 
-// if ($action === 'login') {
-//     $controller->login();
-// } elseif ($action === 'logout') {
-//     $controller->logout();
-// } else {
-//     // Page par défaut
-//     header('Location: index.php?action=login');
-//     exit;
-// }
+
+?>
