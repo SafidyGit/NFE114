@@ -30,7 +30,6 @@
             border-color: #96D4D4;
         }
     </style>
-<!-- style="width: 20%; text-align:center; margin:auto; border: 1px solid black; border-collapse: collapse;" -->
 <table class="table table-striped table-bordered">
 <thead>
 <tr>

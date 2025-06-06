@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../models/Category.php';
 
 class CategoryController {
+
     public function index() 
     {
         $categoryModel = new Category();
@@ -22,13 +23,18 @@ class CategoryController {
     public function create() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $category = trim(htmlspecialchars($_POST['category']));
-           
-            $categoryModel = new Category();
-            $categoryModel->add_category($category);
+            if($_POST['category'] == !null){
+                $category = trim(htmlspecialchars($_POST['category']));
+                
+                $categoryModel = new Category();
+                $categoryModel->add_category($category);
 
-            header('Location: views/admin/category/create.php?success=1');
-            exit;
+                header('Location: views/admin/category/create.php?success=1');
+                exit;
+            } else{
+                echo 'Champs obligatoire';
+            }
+            
         } else {
             require 'views/admin/category/create.php';
         
@@ -44,7 +50,6 @@ class CategoryController {
             $categoryModel->update_category($category_id , $category);
 
             header('Location: views/admin/category/index.php');
-            // header('Location: views/admin/category/update.php?success=1');
             exit;
         } else {
             require 'views/admin/category/update.php';
@@ -65,6 +70,5 @@ class CategoryController {
             require 'views/admin/category/index.php';
         }
     }
-
     
 }
