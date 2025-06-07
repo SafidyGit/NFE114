@@ -12,7 +12,10 @@ class Product
 
     public function get_all_product()
     {
-        $sql = "SELECT * FROM product ORDER BY product_id DESC";
+        $sql = "SELECT * FROM product JOIN supplier, category
+                WHERE product.supplier_id = supplier.supplier_id AND product.category_id = category.category_id
+                ORDER BY product_id DESC";
+
         $stmt = $this->db->query($sql);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,32 +38,34 @@ class Product
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
-            'product_reference' => $product_reference, 
-            'product_name' => $product_name, 
-            'product_description' => $product_description,
-            'product_quantity_stock' => $product_quantity_stock, 
-            'product_alert_threshold' => $product_alert_threshold,
-            'product_unit_price' => $product_unit_price, 
-            'supplier_id' => $supplier_id, 
-            'category_id' => $category_id
+            ':product_reference' => $product_reference, 
+            ':product_name' => $product_name, 
+            ':product_description' => $product_description,
+            ':product_quantity_stock' => $product_quantity_stock, 
+            ':product_alert_threshold' => $product_alert_threshold,
+            ':product_unit_price' => $product_unit_price, 
+            ':supplier_id' => $supplier_id, 
+            ':category_id' => $category_id
         ]);
     }
 
     public function update_product($product_id , $product_reference, $product_name, $product_description, $product_quantity_stock, $product_alert_threshold, $product_unit_price, $supplier_id, $category_id) 
     {
-        $sql = "UPDATE product SET product_reference = :product_reference, product_name = :product_name, product_description = :productdescription, product_quantity_stock = :product_quantity_stock, product_alert_threshold = :product_alert_threshold, product_unit_price = :product_unit_price, supplier_id = :supplier_id, category_id = :category_id WHERE product_id = :product_id";
+        $sql = "UPDATE product SET product_reference = :product_reference, product_name = :product_name, product_description = :product_description, product_quantity_stock = :product_quantity_stock, product_alert_threshold = :product_alert_threshold, product_unit_price = :product_unit_price, supplier_id = :supplier_id, category_id = :category_id WHERE product_id = :product_id";
 
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
-            'product_reference' => $product_reference, 
-            'product_name' => $product_name, 
-            'product_description' => $product_description,
-            'product_quantity_stock' => $product_quantity_stock, 
-            'product_alert_threshold' => $product_alert_threshold,
-            'product_unit_price' => $product_unit_price, 
-            'supplier_id' => $supplier_id, 
-            'category_id' => $category_id
+            ':product_reference' => $product_reference, 
+            ':product_name' => $product_name, 
+            ':product_description' => $product_description,
+            ':product_quantity_stock' => $product_quantity_stock, 
+            ':product_alert_threshold' => $product_alert_threshold,
+            ':product_unit_price' => $product_unit_price, 
+            ':supplier_id' => $supplier_id, 
+            ':category_id' => $category_id,
+            ':product_id' => $product_id
+
         ]);
     }
 

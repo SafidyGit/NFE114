@@ -39,6 +39,7 @@
     <th></th>
 </tr>
 </thead>
+<?php if(!empty($categories)):?>
 <tbody>    
 <?php foreach($categories as $category) : ?>
     <tr>
@@ -54,6 +55,7 @@
     
 <?php endforeach; ?>
 </tbody>
+<?php endif;?>
 </table>
     
 </body>

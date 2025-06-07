@@ -30,6 +30,9 @@ switch ($action) {
     case 'product_create':
         $productController->create();
         break;
+    case 'product_update':
+        $productController->update();
+        break;
     default:
         header('Location: index.php?action=login');
         exit;

@@ -2,6 +2,15 @@
     require_once __DIR__ . '/../../../controllers/ProductController.php';
     require_once __DIR__ . '/../../../controllers/CategoryController.php';
     require_once __DIR__ . '/../../../controllers/SupplierController.php';
+
+    $productController = new ProductController();
+    $products = $productController->index();
+
+    $categoryController = new CategoryController();
+    $categories = $categoryController->index();
+
+    $supplierController = new SupplierController();
+    $suppliers = $supplierController->index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,17 +29,6 @@
 <div>
     <a href="create.php">Ajouter un produit</a>
 </div>
-
-<?php
-    $productController = new ProductController();
-    $products = $productController->index();
-
-    $categoryController = new CategoryController();
-    $categories = $categoryController->index();
-
-    $supplierController = new SupplierController();
-    $suppliers = $supplierController->index();
-?>
     <style>
         table, th, td{
             border: 1px solid black;
@@ -38,23 +36,24 @@
             border-color: #96D4D4;
         }
     </style>
-<?php if($products == !null):?>
+
 <table class="table table-striped table-bordered">
 <thead>
 <tr>
     <th>Id</th>
-    <th>product_reference</th>
-    <th>product_name</th>
-    <th>product_description</th>
-    <th>product_quantity_stock</th>
-    <th>product_alert_threshold</th>
-    <th>product_unit_price</th>
-    <th>supplier_id</th>
-    <th>category_id</th>
+    <th>Réference</th>
+    <th>Nom</th>
+    <th>Déscription</th>
+    <th>quantité en stock</th>
+    <th>seuil d'alerte</th>
+    <th>prix unitaire</th>
+    <th>Fourniseur</th>
+    <th>Categorie</th>
     <th></th>
     <th></th>
 </tr>
 </thead>
+<?php if(!empty($products)):?>
 <tbody>    
 <?php foreach($products as $product) : ?>
     <tr>
@@ -65,12 +64,12 @@
         <td><?= $product['product_quantity_stock']; ?></td>
         <td><?= $product['product_alert_threshold']; ?></td>
         <td><?= $product['product_unit_price']; ?></td>
-        <td><?= $product['supplier_id']; ?></td>
-        <td><?= $product['category_id']; ?></td>
+        <td><?= $product['supplier_id'] .' : '. $product['supplier']; ?></td>
+        <td><?= $product['category_id'] .' : '. $product['category']; ?></td>
 
-        <td><a href="update.php?id=<?= $product['product_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
+        <td><a href="update.php?id=<?= $product['product_id']?>&category_id=<?=$product['category_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
         <td>
-            <form method='POST' action="/index.php?action=product_delete&id=<?= $product['product_id']?>" onsubmit="return confirm('Voulez-vous vraiment modifier cette catégorie <?= $product['product_id'];?>?');">
+            <form method='POST' action="/index.php?action=product_delete&id=<?= $product['product_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie <?= $product['product_id'];?>?');">
                 <input class="btn-lg"  style="color: red;" type="submit" value="X">
             </form>
         </td>
@@ -83,3 +82,5 @@
     
 </body>
 </html>
+
+

@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../models/Product.php';
+require_once __DIR__ . '/CategoryController.php';
+require_once __DIR__ . '/SupplierController.php';
 
 class ProductController {
 
@@ -8,7 +10,7 @@ class ProductController {
     {
         $productModel = new Product();
         $products = $productModel->get_all_product();
-
+        
         return $products;
     }
 

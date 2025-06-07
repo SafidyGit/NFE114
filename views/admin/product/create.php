@@ -1,4 +1,3 @@
-
 <?php 
     require_once __DIR__ . '/../../../controllers/CategoryController.php';
     require_once __DIR__ . '/../../../controllers/SupplierController.php';
@@ -11,6 +10,7 @@
     $categories = new CategoryController();
     $category_list = $categories->index();
 ?>
+
 
 <h2>Ajouter un produit</h2>
 
@@ -25,16 +25,23 @@
     <input type="number" name="product_quantity_stock" placeholder="product_quantity_stock" required><br>
     <input type="number" name="product_alert_threshold" placeholder="product_alert_threshold" required><br>
     <input type="number" name="product_unit_price" placeholder="product_unit_price" required><br>
+    
+    <label for="supplier_id">Fournisseur : </label>
     <select name="supplier_id" id="">
         <?php foreach($supplier_list as $supplier):?>
-        <option value="<?=$supplier['supplier_id']?>"><?=$supplier['supplier_id']?> | <?=$supplier['supplier']?></option>
+        <option value="<?=$supplier['supplier_id']?>">
+            <?=$supplier['supplier_id']?> | <?=$supplier['supplier']?>
+        </option>
         <?php endforeach;?>
-    </select>
+    </select><br>
+    <label for="category_id">Catégorie : </label>
     <select name="category_id" id="">
         <?php foreach($category_list as $category):?>
-        <option value="<?=$category['category_id']?>"><?=$category['category_id']?> | <?=$category['category']?></option>
+        <option value="<?=$category['category_id']?>">
+            <?=$category['category_id']?> | <?=$category['category']?>
+        </option>
         <?php endforeach;?>
-    </select>
+    </select><br>
     
     <button type="submit">Ajouter</button>
 </form>
