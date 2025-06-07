@@ -67,7 +67,7 @@
         <td><?= $product['supplier_id'] .' : '. $product['supplier']; ?></td>
         <td><?= $product['category_id'] .' : '. $product['category']; ?></td>
 
-        <td><a href="update.php?id=<?= $product['product_id']?>&category_id=<?=$product['category_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
+        <td><a href="update.php?id=<?= $product['product_id']?>&categorie=<?=$product['category_id']?>&fournisseur=<?=$product['supplier_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
         <td>
             <form method='POST' action="/index.php?action=product_delete&id=<?= $product['product_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie <?= $product['product_id'];?>?');">
                 <input class="btn-lg"  style="color: red;" type="submit" value="X">
