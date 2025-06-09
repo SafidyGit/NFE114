@@ -1,24 +1,10 @@
-<?php 
-    require_once __DIR__ . '/../../../controllers/CategoryController.php';
-    require_once __DIR__ . '/../../../controllers/SupplierController.php';
-?>
-
-<?php 
-    $suppliers = new SupplierController();
-    $supplier_list = $suppliers->index();
-
-    $categories = new CategoryController();
-    $category_list = $categories->index();
-?>
-
-
 <h2>Ajouter un produit</h2>
 
 <?php if (isset($_GET['success'])): ?>
     <p style="color:green;">Produits ajoutée avec succès !</p>
 <?php endif; ?>
 
-<form method="POST" action="/index.php?action=product_create">
+<form method="POST" action="/index.php?action=product_store">
     <input type="text" name="product_reference" placeholder="product_reference" required><br>
     <input type="text" name="product_name" placeholder="product_name" required><br>
     <input type="text" name="product_description" placeholder="product_description" required><br>

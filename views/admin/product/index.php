@@ -1,17 +1,3 @@
-<?php
-    require_once __DIR__ . '/../../../controllers/ProductController.php';
-    require_once __DIR__ . '/../../../controllers/CategoryController.php';
-    require_once __DIR__ . '/../../../controllers/SupplierController.php';
-
-    $productController = new ProductController();
-    $products = $productController->index();
-
-    $categoryController = new CategoryController();
-    $categories = $categoryController->index();
-
-    $supplierController = new SupplierController();
-    $suppliers = $supplierController->index();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,11 +9,11 @@
 <body class="container">
 <h3>Produits</h3>
 <div>
-    <a href="../../index.php?action=logout">Se déconnecter</a>
+    <a href="../../../index.php?action=logout">Se déconnecter</a>
     <a href="../../admin/dashboard.php">Dashboard</a>
 </div>  
 <div>
-    <a href="create.php">Ajouter un produit</a>
+    <a href="../../../index.php?action=product_create">Ajouter un produit</a>
 </div>
     <style>
         table, th, td{
@@ -66,10 +52,13 @@
         <td><?= $product['product_unit_price']; ?></td>
         <td><?= $product['supplier_id'] .' : '. $product['supplier']; ?></td>
         <td><?= $product['category_id'] .' : '. $product['category']; ?></td>
-
-        <td><a href="update.php?id=<?= $product['product_id']?>&categorie=<?=$product['category_id']?>&fournisseur=<?=$product['supplier_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
         <td>
-            <form method='POST' action="/index.php?action=product_delete&id=<?= $product['product_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie <?= $product['product_id'];?>?');">
+            <a href="index.php?action=product_edit&id=<?= $product['product_id']?>&categorie=<?=$product['category_id']?>&fournisseur=<?=$product['supplier_id']?>">
+                <input class="btn-sm" type="button" value="Modifier">
+            </a>
+        </td>
+        <td>
+            <form method='POST' action="/index.php?action=product_delete&id=<?= $product['product_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ? <?= $product['product_id'];?>?');">
                 <input class="btn-lg"  style="color: red;" type="submit" value="X">
             </form>
         </td>

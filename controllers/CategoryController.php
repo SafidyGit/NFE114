@@ -9,7 +9,7 @@ class CategoryController {
         $categoryModel = new Category();
         $categories = $categoryModel->get_all_category();
 
-        return $categories;
+        require __DIR__ . '/../views/admin/category/index.php';
     }
 
     public function get_category_by_id($id)
@@ -20,7 +20,12 @@ class CategoryController {
         return $category;
     }
 
-    public function create() 
+    public function create()
+    {
+        require __DIR__ . '/../views/admin/category/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($_POST['category'] == !null){
@@ -40,6 +45,15 @@ class CategoryController {
         
         }
     }
+
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $category = $this->get_category_by_id($id);
+
+        require __DIR__ . '/../views/admin/category/update.php';
+    }
+
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -49,10 +63,10 @@ class CategoryController {
             $categoryModel = new Category();
             $categoryModel->update_category($category_id , $category);
 
-            header('Location: views/admin/category/index.php');
+            header('Location: index.php?action=category_list');
             exit;
         } else {
-            require 'views/admin/category/update.php';
+            require __DIR__ . '/../index.php?action=category_list';
         
         }
     }
@@ -64,10 +78,10 @@ class CategoryController {
             $categoryModel = new Category();
             $categoryModel->delete_category($category_id);
 
-            header('Location: views/admin/category/index.php');
+            header('Location: index.php?action=category_list');
             exit;
         } else {
-            require 'views/admin/category/index.php';
+            require __DIR__ . '/../index.php?action=category_list';
         }
     }
     

@@ -1,24 +1,4 @@
 
-<?php 
-    require_once __DIR__ . '/../../../controllers/ProductController.php';
-    require_once __DIR__ . '/../../../controllers/CategoryController.php';
-    require_once __DIR__ . '/../../../controllers/SupplierController.php';
-?>
-
-<?php 
-    $id = $_GET['id'];
-    $productController = new ProductController();
-    $product = $productController->get_product_by_id($id);
-
-    
-    $suppliers = new SupplierController();
-    $supplier_list = $suppliers->index();
-
-    $categories = new CategoryController();
-    $category_list = $categories->index();
-    
-?>
-
 <h2>Modifier un produit</h2>
 
 <?php if (isset($_GET['success'])): ?>

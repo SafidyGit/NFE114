@@ -8,10 +8,17 @@ class ProductController {
 
     public function index() 
     {
+        // Appel de la méthode get_all_product() dans le Modèle Product pour afficher la liste des produits
         $productModel = new Product();
         $products = $productModel->get_all_product();
+
+        $categoryModel = new Category();
+        $categories = $categoryModel->get_all_category();
+
+        $supplierModel = new Supplier();
+        $suppliers = $supplierModel->get_all_supplier();
         
-        return $products;
+        require __DIR__ . '/../views/admin/product/index.php';
     }
 
     public function get_product_by_id($id)
@@ -22,7 +29,19 @@ class ProductController {
         return $product;
     }
 
-    public function create() 
+
+    public function create()
+    {
+        $categoryModel = new Category();
+        $category_list = $categoryModel->get_all_category();
+
+        $supplierModel = new Supplier();
+        $supplier_list = $supplierModel->get_all_supplier();
+        
+        require __DIR__ . '/../views/admin/product/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -45,6 +64,20 @@ class ProductController {
         
         }
     }
+
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $product = $this->get_product_by_id($id);
+
+        $categoryModel = new Category();
+        $category_list = $categoryModel->get_all_category();
+
+        $supplierModel = new Supplier();
+        $supplier_list = $supplierModel->get_all_supplier();
+
+        require __DIR__ . '/../views/admin/product/update.php';
+    }
     
     public function update()
     {
@@ -62,10 +95,10 @@ class ProductController {
             $productModel = new Product();
             $productModel->update_product($product_id , $product_reference, $product_name, $product_description, $product_quantity_stock, $product_alert_threshold, $product_unit_price, $supplier_id, $category_id);
 
-            header('Location: views/admin/product/index.php');
+            header('Location: index.php?action=product_list');
             exit;
         } else {
-            require 'views/admin/product/update.php';
+            require 'index.php?action=product_list';
         
         }
     }
@@ -77,10 +110,10 @@ class ProductController {
             $productModel = new Product();
             $productModel->delete_product($product_id);
 
-            header('Location: views/admin/product/index.php');
+            header('Location: index.php?action=product_list');
             exit;
         } else {
-            require 'views/admin/product/index.php';
+            require 'index.php?action=product_list';
         }
     }
     

@@ -15,11 +15,19 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
-    case 'category':
+
+    // Action sur les Categories
+    case 'category_list':
         $categoryController->index();
         break;
     case 'category_create':
         $categoryController->create();
+        break;
+    case 'category_store':
+        $categoryController->store();
+        break;
+    case 'category_edit':
+        $categoryController->edit();
         break;
     case 'category_update':
         $categoryController->update();
@@ -27,8 +35,19 @@ switch ($action) {
     case 'category_delete':
         $categoryController->delete();
         break;
+
+    // Action sur les Produits
+    case 'product_list':
+        $productController->index();
+        break;
     case 'product_create':
         $productController->create();
+        break;
+    case 'product_store':
+        $productController->store();
+        break;
+    case 'product_edit':
+        $productController->edit();
         break;
     case 'product_update':
         $productController->update();
@@ -36,6 +55,8 @@ switch ($action) {
     case 'product_delete':
         $productController->delete();
         break;
+
+
     default:
         header('Location: index.php?action=login');
         exit;

@@ -19,6 +19,6 @@ if ($_SESSION['role_id'] != 1) {
 </div>
 
 <div>
-<a href="category/index.php">Liste des catégories de produits</a>
-<a href="product/index.php">Liste des produits</a>
+<a href="../../index.php?action=category_list">Liste des catégories de produits</a>
+<a href="../../index.php?action=product_list">Liste des produits</a>
 </div>
