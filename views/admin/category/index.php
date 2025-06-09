@@ -1,56 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body class="container">
-<h3>Categories</h3>
-<div>
-    <a href="../../index.php?action=logout">Se déconnecter</a>
-    <a href="../../admin/dashboard.php">Dashboard</a>
-</div>  
-<div>
+<?php include __DIR__. '/../layout/header.php'; ?>
+
+<!-- Main Content -->
+  <div class="flex-grow-1 p-3 mt-5">
+    <!-- Toggler for small screens -->
+    <button class="btn btn-outline-light d-lg-none mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+      ☰ Menu
+    </button>
+
+    <h3>Liste des catégories de produit</h3>
+    <p>Ceci est le contenu principal de la page.</p>
     <a href="../../../index.php?action=category_create">Ajouter une catégorie de produit</a>
-</div>
 
-
-    <style>
-        table, th, td{
-            border: 1px solid black;
-            border-collapse: collapse;
-            border-color: #96D4D4;
-        }
-    </style>
-<table class="table table-striped table-bordered">
-<thead>
-<tr>
-    <th>Id</th>
-    <th>Categorie</th>
-    <th></th>
-    <th></th>
-</tr>
-</thead>
-<?php if(!empty($categories)):?>
-<tbody>    
-<?php foreach($categories as $category) : ?>
-    <tr>
-        <td><?= $category['category_id']; ?></td>
-        <td><?= $category['category']; ?></td>
-        <td><a href="index.php?action=category_edit&id=<?= $category['category_id']?>"><input class="btn-sm" type="button" value="Modifier"></a></td>
-        <td>
-            <form method='POST' action="/index.php?action=category_delete&id=<?= $category['category_id']?>" onsubmit="return confirm('Voulez-vous vraiment modifier cette catégorie <?= $category['category_id'];?>?');">
-                <input class="btn-lg"  style="color: red;" type="submit" value="X">
-            </form>
-        </td>
-    </tr>
+    <div class="table-responsive bg-dark p-3 rounded shadow">
+    <table class="table table-dark table-striped table-hover table-bordered mb-0">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Catégorie</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <?php if(!empty($categories)):?>
+        <tbody>
+        <?php foreach($categories as $category) : ?>
+        <tr>
+            <td><?= $category['category_id']; ?></td>
+            <td><?= $category['category']; ?></td>
+            <td class="d-flex align-items-center gap-2">
+                <a href="index.php?action=category_edit&id=<?= $category['category_id']?>">
+                <button class="btn btn-sm btn-primary">Modifier</button>
+                </a>
+                <form method='POST' action="/index.php?action=category_delete&id=<?= $category['category_id']?>" onsubmit="return confirm('Voulez-vous vraiment modifier cette catégorie <?= $category['category_id'];?>?');">
+                <button class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+        <?php endif;?>
+    </table>
+    </div>
     
-<?php endforeach; ?>
-</tbody>
-<?php endif;?>
-</table>
-    
-</body>
-</html>
+<?php include __DIR__. '/../layout/footer.php'; ?>

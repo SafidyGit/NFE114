@@ -24,14 +24,19 @@ class Category
         $sql = "SELECT * FROM category WHERE category_id = :category_id";
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['category_id' => $category_id]);
+        $stmt->execute([
+            'category_id' => $category_id
+        ]);
+        
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function add_category($category) {
         $sql = "INSERT INTO category (category) VALUES (:category)";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([':category' => $category]);
+        return $stmt->execute([
+            ':category' => $category
+        ]);
     }
 
     public function update_category($category_id , $category) {
@@ -46,7 +51,9 @@ class Category
     public function delete_category($category_id) {
         $sql = "DELETE FROM category WHERE category_id = :category_id";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([':category_id' => $category_id]);
+        return $stmt->execute([
+            ':category_id' => $category_id
+        ]);
     }
 
 }

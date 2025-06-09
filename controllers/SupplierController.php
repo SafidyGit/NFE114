@@ -29,7 +29,12 @@ class SupplierController {
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
             $supplierModel = new Supplier();
-            $supplierModel->add_supplier($supplier, $supplier_address, $supplier_phone_number, $supplier_email);
+            $supplierModel->add_supplier(
+                $supplier, 
+                $supplier_address, 
+                $supplier_phone_number, 
+                $supplier_email
+            );
 
             header('Location: views/admin/supplier/create.php?success=1');
             exit;
@@ -50,7 +55,13 @@ class SupplierController {
            
 
             $supplierModel = new Supplier();
-            $supplierModel->update_supplier($supplier_id , $supplier, $supplier_address, $supplier_phone_number, $supplier_email);
+            $supplierModel->update_supplier(
+                $supplier_id , 
+                $supplier, 
+                $supplier_address, 
+                $supplier_phone_number, 
+                $supplier_email
+            );
 
             header('Location: views/admin/supplier/index.php');
             exit;

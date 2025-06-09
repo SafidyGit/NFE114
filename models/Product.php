@@ -76,6 +76,35 @@ class Product
         return $stmt->execute([':product_id' => $product_id]);
     }
 
+
+    //  For employe expedition
+    public function getByCategory($category_id)
+    {
+        $sql = "SELECT * FROM product 
+                JOIN supplier ON product.supplier_id = supplier.supplier_id
+                JOIN category ON product.category_id = category.category_id
+                WHERE product.category_id = :category_id
+                ORDER BY product_id DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['category_id' => $category_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function searchByName($searchTerm)
+    {
+        $sql = "SELECT * FROM product 
+                JOIN supplier ON product.supplier_id = supplier.supplier_id 
+                JOIN category ON product.category_id = category.category_id
+                WHERE product.product_name LIKE :searchTerm
+                ORDER BY product_id DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 
 ?>

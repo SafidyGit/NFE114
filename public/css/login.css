@@ -1,0 +1,29 @@
+body{
+    background: #1c2f39;
+}
+.card-login{
+    border-radius: 3rem; 
+    border-radius: 2rem;
+    box-shadow: 5px 6px 10px 0px BLACK; 
+    background-color: rgb(73 73 73 / 59%) !important;
+}
+.alert-login{
+    border-radius:1rem;
+    box-shadow: 0px 2px 7px black;
+}
+.error{
+    color:red;
+}
+.form-control{
+    background: transparent;
+    border-radius: 2rem;
+    box-shadow: 0px 2px 7px black; 
+    color:white; 
+    border-color:#dcc17170
+}
+.btn{
+    border-radius:10rem;
+}
+/* .bs-btn-hover-bg{
+    background-color:#efd073c4;
+} */
