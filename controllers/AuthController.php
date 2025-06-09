@@ -25,7 +25,7 @@ class AuthController {
                 exit;
             } else {
                
-                $error = "Email ou mot de passe incorrect";
+                $error = "Email ou mot de passe incorrect, Veuillez réessayer !";
                 require 'views/auth/login.php';
             }
         } else {
