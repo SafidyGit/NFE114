@@ -8,11 +8,13 @@
           <form method="GET" action="">
         <label>Filtrer par catégorie :</label>
           <select name="categorie" onchange="this.form.submit()" class="btn btn-secondary dropdown-toggle filter">
+            <option value="">Choisir</option>
             <option value="">-- Toutes --</option>
             <?php foreach($categories as $categories) : ?>
             <option value="<?= $categories['category_id']; ?>"><?= $categories['category']; ?></option>
             <?php endforeach; ?>
           </select>
+          
         </form>
         <?php endif;?>
         
@@ -57,6 +59,8 @@
           <?php endforeach; ?>
         </tbody>
     </table>
+    <?php else : ?>
+      <p class="text-center mt-3">Aucun produit trouvé.</p>
 <?php endif;?>
 </div>
 </section>

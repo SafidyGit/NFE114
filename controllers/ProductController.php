@@ -13,7 +13,7 @@ class ProductController {
         
         return $products;
     }
-
+   
     public function get_product_by_id($id)
     {
         $productModel = new Product();
@@ -85,5 +85,37 @@ class ProductController {
         }
     }
    
+    // For employe expedition
+    public function get_products_by_category($category_id)
+    {
+        $productModel = new Product();
+        return $productModel->getByCategory($category_id);
+    }
+
+    public function dashboard()
+    {
+        
+    $categoryController = new CategoryController();
+    $categories = $categoryController->index();
+
+    $categoryId = $_GET['categorie'] ?? '';
+
+    if ($categoryId !== '') {
+        // Récupérer les produits filtrés
+        $products = $this->get_products_by_category($categoryId);
+    } else {
+        // Récupérer tous les produits
+        $products = $this->index();
+    }
+        // Charger la vue
+        require  'views/employe/dashboard.php';
+    }
+
+    public function search_products($searchTerm)
+    {
+        $productModel = new Product();
+        return $productModel->searchByName($searchTerm);
+    }
+
     
 }
