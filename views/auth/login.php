@@ -34,6 +34,7 @@
                                 </div>
                                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-warning btn-lg px-5" type="submit">Se connecter</button>
                             </form>
+                            <a href="/index.php?action=user_create">Créer un compte</a>
                         </div>
                     </div>
                 </div>

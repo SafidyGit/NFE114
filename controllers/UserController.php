@@ -5,9 +5,18 @@ class UserController
 {
     public function index() 
     {
-        
+        $userModel = new User();
+        $users = $userModel->get_all_user();
+
+        require __DIR__ . '/../views/admin/user/index.php';
     }
-    public function create() 
+
+    public function create()
+    {
+        require __DIR__ . '/../views/admin/user/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = htmlspecialchars($_POST['username']);

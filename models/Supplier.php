@@ -24,7 +24,7 @@ class Supplier
         $sql = "SELECT * FROM supplier WHERE supplier_id = :supplier_id";
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['supplier_id' => $supplier_id]);
+        $stmt->execute([':supplier_id' => $supplier_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

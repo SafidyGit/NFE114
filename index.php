@@ -1,19 +1,42 @@
 <?php
 require_once __DIR__ . '/controllers/AuthController.php';
+require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 
 $action = $_GET['action'] ?? null;
 $authController = new AuthController();
+$userController = new UserController();
 $categoryController = new CategoryController();
 $productController = new ProductController();
 
+// Authentication
 switch ($action) {
     case 'login':
         $authController->login();
         break;
     case 'logout':
         $authController->logout();
+        break;
+
+    // Action sur les Users
+    case 'user_list':
+        $userController->index();
+        break;
+
+    // Possible si pas de compte connecté ??? Pas encore OK
+    case 'user_create':
+        $userConrtoller->create();
+        break;
+    case 'user_store':
+        $userConrtoller->store();
+        break;
+
+    case 'user_edit':
+        $userConrtoller->edit();
+        break;
+    case 'user_update':
+        $userConrtoller->update();
         break;
 
     // Action sur les Categories

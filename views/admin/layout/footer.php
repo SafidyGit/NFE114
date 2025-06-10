@@ -10,7 +10,7 @@
             <a class="nav-link text-light" href="#">🏠 Accueil</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-light" href="#">👨 Utilisateur</a>
+            <a class="nav-link text-light" href="/index.php?action=user_list">👨 Utilisateur</a>
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link text-light" href="/index.php?action=product_list">📺 Produits</a>

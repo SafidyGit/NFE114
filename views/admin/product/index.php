@@ -8,7 +8,6 @@
     </button>
 
     <h3>Liste des produits</h3>
-    <p>Ceci est le contenu principal de la page.</p>
     <a href="../../../index.php?action=product_create">Ajouter un produit</a>
 
 <div class="table-responsive bg-dark p-3 rounded shadow">

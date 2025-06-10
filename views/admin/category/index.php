@@ -8,7 +8,6 @@
     </button>
 
     <h3>Liste des catégories de produit</h3>
-    <p>Ceci est le contenu principal de la page.</p>
     <a href="../../../index.php?action=category_create">Ajouter une catégorie de produit</a>
 
     <div class="table-responsive bg-dark p-3 rounded shadow">
