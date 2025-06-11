@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../models/CustomerOrder.php';
 
-class CustomerOrderController {
+class CustomerOrderController 
+{
 
     public function index() 
     {
@@ -14,7 +15,7 @@ class CustomerOrderController {
 
     public function get_customer_by_id($id)
     {
-        $customerOrderModel = new Customer();
+        $customerOrderModel = new CustomerOrder();
         $customer = $customerOrderModel->getById($id);
 
         return $customer;
@@ -33,8 +34,8 @@ class CustomerOrderController {
             $customer_order_status = trim(htmlspecialchars($_POST['customer_order_status']));
             $customer_id = trim(htmlspecialchars($_POST['customer_id']));
            
-            $customerOrderModel = new Customer();
-            $customerOrderModel->add_customer(
+            $customerOrderModel = new CustomerOrder();
+            $customerOrderModel->add_customer_order(
                 $customer_order_reference, 
                 $customer_order_date, 
                 $customer_order_status, 
@@ -67,8 +68,8 @@ class CustomerOrderController {
             $customer_id = trim(htmlspecialchars($_POST['customer_id']));
            
 
-            $customerOrderModel = new Customer();
-            $customerOrderModel->update_customer(
+            $customerOrderModel = new CustomerOrder();
+            $customerOrderModel->update_customer_order(
                 $customer_order_id , 
                 $customer_order_reference, 
                 $customer_order_date, 
@@ -88,8 +89,8 @@ class CustomerOrderController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $customer_order_id = $_GET['id'];
 
-            $customerOrderModel = new Customer();
-            $customerOrderModel->delete_customer($customer_order_id);
+            $customerOrderModel = new CustomerOrder();
+            $customerOrderModel->delete_customer_order($customer_order_id);
 
             header('Location: /index.php?action=customer_order_list');
             exit;
