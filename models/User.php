@@ -17,15 +17,41 @@ class User {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function add($username, $email, $hashedPassword, $role_id) {
+        public function getById($user_id)
+    {
+        $sql = "SELECT * FROM user WHERE user_id = :user_id";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['user_id' => $user_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function add_user($username, $email, $hashedPassword, $role_id) 
+    {
         $sql = "INSERT INTO user (username, user_email, password, role_id) VALUES (:username, :user_email, :password, :role_id)";
         
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':username' => $username, 
-            ':email' => $email, 
+            ':user_email' => $email, 
             ':password' => $hashedPassword, 
             ':role_id' => $role_id
+        ]);
+    }
+
+
+    public function update_user($user_id, $username, $email, $hashedPassword, $role_id) 
+    {
+        $sql = "UPDATE user SET username = :username, user_email = :user_email, password = :password, role_id = :role_id WHERE user_id = :user_id";
+
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':username' => $username, 
+            ':user_email' => $email,
+            ':password' => $hashedPassword,
+            ':role_id' => $role_id,
+            ':user_id' => $user_id,
         ]);
     }
 
@@ -37,7 +63,13 @@ class User {
     }
 
 
+    public function delete_user($user_id) 
+    {
+        $sql = "DELETE FROM user WHERE user_id = :user_id";
+        $stmt = $this->db->prepare($sql);
 
+        return $stmt->execute([':user_id' => $user_id]);
+    }
 
 
 }

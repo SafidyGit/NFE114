@@ -28,17 +28,19 @@ switch ($action) {
 
     // Possible si pas de compte connecté ??? Pas encore OK
     case 'user_create':
-        $userConrtoller->create();
+        $userController->create();
         break;
     case 'user_store':
-        $userConrtoller->store();
+        $userController->store();
         break;
-
     case 'user_edit':
-        $userConrtoller->edit();
+        $userController->edit();
         break;
     case 'user_update':
-        $userConrtoller->update();
+        $userController->update();
+        break;
+    case 'user_delete':
+        $userController->delete();
         break;
 
     // Action sur les Categories
