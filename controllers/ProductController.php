@@ -142,7 +142,7 @@ class ProductController {
     }
     
 
-        // For employe expedition
+    // For employe expedition
     public function get_products_by_category($category_id)
     {
         $productModel = new Product();
@@ -165,7 +165,7 @@ class ProductController {
         $products = $this->index();
     }
         // Charger la vue
-        require  'views/employe/dashboard.php';
+        require  __DIR__ . 'views/employe/dashboard.php';
     }
 
     public function search_products($searchTerm)

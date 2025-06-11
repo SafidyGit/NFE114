@@ -1,5 +1,7 @@
 <?php
-  session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
   // Récuperation de la valeur de username
   if (isset($_SESSION['user_id'])) {
     $username = $_SESSION['username'];
