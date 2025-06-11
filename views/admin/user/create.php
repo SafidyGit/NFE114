@@ -16,7 +16,7 @@
 <h3>Ajouter un utilisateur</h3>
 
 <div class="bg-dark text-white p-4 rounded shadow mb-4" style="max-width: 1000px;">
-  <form method="POST" action="/index.php?action=product_store">
+  <form method="POST" action="/index.php?action=user_store">
     
     <div class="row">
       <div class="col-md-6 mb-3">

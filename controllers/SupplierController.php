@@ -7,10 +7,12 @@ class SupplierController {
     public function index() 
     {
         $supplierModel = new Supplier();
-        $categories = $supplierModel->get_all_supplier();
+        $suppliers = $supplierModel->get_all_supplier();
 
-        return $categories;
+        require __DIR__ . '/../views/admin/supplier/index.php';
     }
+
+
 
     public function get_supplier_by_id($id)
     {
@@ -20,7 +22,12 @@ class SupplierController {
         return $supplier;
     }
 
-    public function create() 
+    public function create()
+    {
+        require __DIR__ . '/../views/admin/supplier/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $supplier = trim(htmlspecialchars($_POST['supplier']));
@@ -44,6 +51,14 @@ class SupplierController {
         }
     }
     
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $supplier = $this->get_supplier_by_id($id);
+
+        require __DIR__ . '/../views/admin/supplier/update.php';
+    }
+
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -63,10 +78,10 @@ class SupplierController {
                 $supplier_email
             );
 
-            header('Location: views/admin/supplier/index.php');
+            header('Location: /index.php?action=supplier_list');
             exit;
         } else {
-            require 'views/admin/supplier/update.php';
+            require 'index.php?action=supplier_list';
         
         }
     }
@@ -78,10 +93,10 @@ class SupplierController {
             $supplierModel = new Supplier();
             $supplierModel->delete_supplier($supplier_id);
 
-            header('Location: views/admin/supplier/index.php');
+            header('Location: /index.php?action=supplier_list');
             exit;
         } else {
-            require 'views/admin/supplier/index.php';
+            require '/index.php?action=supplier_list';
         }
     }
     

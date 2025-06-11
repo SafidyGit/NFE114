@@ -3,12 +3,14 @@ require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
+require_once __DIR__ . '/controllers/SupplierController.php';
 
 $action = $_GET['action'] ?? null;
 $authController = new AuthController();
 $userController = new UserController();
 $categoryController = new CategoryController();
 $productController = new ProductController();
+$supplierController = new SupplierController();
 
 // Authentication
 switch ($action) {
@@ -77,6 +79,26 @@ switch ($action) {
         break;
     case 'product_delete':
         $productController->delete();
+        break;
+
+    // Action sur les Fournisseurs
+    case 'supplier_list':
+        $supplierController->index();
+        break;
+    case 'supplier_create':
+        $supplierController->create();
+        break;
+    case 'supplier_store':
+        $supplierController->store();
+        break;
+    case 'supplier_edit':
+        $supplierController->edit();
+        break;
+    case 'supplier_update':
+        $supplierController->update();
+        break;
+    case 'supplier_delete':
+        $supplierController->delete();
         break;
 
 
