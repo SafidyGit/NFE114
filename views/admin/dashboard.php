@@ -20,8 +20,12 @@ include 'layout/header.php';
       ☰ Menu
     </button>
 
-    <h1>Bienvenue</h1>
-    <p>Ceci est le contenu principal de la page.</p>
+    <h3>Bienvenue <?php echo $_SESSION['username'];?></h3>
+    
+
+
+
+    
   </div>
 
 <?php include 'layout/footer.php'; ?>

@@ -3,7 +3,7 @@
     <h4 class="text-white mt-5 mb-4">Mon Menu</h4>
     <ul class="nav flex-column">
       <li class="nav-item mb-2">
-        <a class="nav-link text-light" href="views/admin/dashboard.php'">🏠 Accueil</a>
+        <a class="nav-link text-light" href="/index.php?action=admin_dashboard">🏠 Accueil</a>
       </li>
       <li class="nav-item mb-2">
         <a class="nav-link text-light" href="/index.php?action=user_list">👨 Utilisateur</a>

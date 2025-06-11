@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/UserController.php';
+require_once __DIR__ . '/controllers/AdminDashboardController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
@@ -8,6 +9,7 @@ require_once __DIR__ . '/controllers/SupplierController.php';
 $action = $_GET['action'] ?? null;
 $authController = new AuthController();
 $userController = new UserController();
+$adminDashboardController = new AdminDashboardController();
 $categoryController = new CategoryController();
 $productController = new ProductController();
 $supplierController = new SupplierController();
@@ -19,6 +21,11 @@ switch ($action) {
         break;
     case 'logout':
         $authController->logout();
+        break;
+
+    // Admin Dashboard
+    case 'admin_dashboard':
+        $adminDashboardController->index();
         break;
 
     // Action sur les Users
@@ -103,9 +110,10 @@ switch ($action) {
         $supplierController->delete();
         break;
 
-
     default:
-        header('Location: index.php?action=login');
+        // Récupère ou définit le code d'état de réponse HTTP. 
+        http_response_code(404);
+        include __DIR__ . '/views/notFound/notFound.php';
         exit;
 }
 
