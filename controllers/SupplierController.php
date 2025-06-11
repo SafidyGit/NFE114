@@ -12,8 +12,6 @@ class SupplierController {
         require __DIR__ . '/../views/admin/supplier/index.php';
     }
 
-
-
     public function get_supplier_by_id($id)
     {
         $supplierModel = new Supplier();

@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  // Récuperation de la valeur de username
+  if (isset($_SESSION['user_id'])) {
+    $username = $_SESSION['username'];
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,7 +37,7 @@
     <a class="navbar-brand" href="dashboard.php">Acces</a>
     <div class="dropdown d-flex">
     <button class="btn btn-outline-dark logout dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Name
+    <?php echo $_SESSION['username']; ?>
   </button>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="../../index.php?action=logout">Se déconnecter</a></li>
