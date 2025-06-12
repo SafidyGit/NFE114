@@ -51,9 +51,30 @@ include 'layout/header.php';
       </div>
     </div>
 
-
+    
+  <div class="table-responsive bg-dark p-3 rounded shadow">
+      <table class="table table-dark table-striped table-hover table-bordered mb-0">
+      <thead>
+      <tr>
+          <th>Catégorie</th>
+          <th>Total</th>
+      </tr>
+      </thead>
+      <?php if(!empty($totalProductsByCategory)):?>
+      <tbody>    
+      <?php foreach($totalProductsByCategory as $product) : ?>
+          <tr>
+              <td><?= $product['category']; ?></td>
+              <td><?= $product['Total']; ?></td>
+          </tr>
+          
+      <?php endforeach; ?>
+      </tbody>
+      <?php endif;?>
+      </table>
+  </div>
 
     
-  </div>
+</div>
 
 <?php include 'layout/footer.php'; ?>

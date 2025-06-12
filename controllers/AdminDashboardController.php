@@ -14,6 +14,7 @@ class AdminDashboardController
         $count_product_in_stock = $this->productModel->count_all_product_in_stock();
         $out_of_stock = $this->productModel->out_of_stock_count();
         $alert_stock = $this->productModel->product_alert_stock();
+        $totalProductsByCategory = $this->productModel->totalProductsByCategory();
 
         require __DIR__ . '/../views/admin/dashboard.php';
     }

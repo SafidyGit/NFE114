@@ -55,6 +55,20 @@ class Product
         return (int)$alert_stock;
     }
 
+    public function totalProductsByCategory()
+    {
+        $sql = "SELECT category.category, SUM(product.product_quantity_stock) AS 'Total'  
+        FROM product JOIN
+        category ON 
+        product.category_id = category.category_id GROUP BY category.category";
+
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+
     public function getById($product_id)
     {
         $sql = "SELECT * FROM product WHERE product_id = :product_id";
