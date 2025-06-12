@@ -3,7 +3,8 @@ require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/CategoryController.php';
 require_once __DIR__ . '/SupplierController.php';
 
-class ProductController {
+class ProductController 
+{
 
     public function index() 
     {
@@ -22,6 +23,14 @@ class ProductController {
         $product = $productModel->getById($id);
 
         return $product;
+    }
+
+    public function count_product()
+    {
+        $productModel = new Product(); 
+        $count = $productModel->count_all_product();
+        
+        return $count;
     }
 
     // Méthode qui va afficher le formulaire d'ajout d'un produit

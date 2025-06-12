@@ -22,6 +22,16 @@ class Product
     
     }
 
+    public function count_all_product()
+    {
+        $sql = "SELECT count(product_id) FROM product";
+        $stmt = $this->db->query($sql);
+
+        $count = $stmt->fetchColumn();
+        
+        return (int)$count;
+    }
+
     public function getById($product_id)
     {
         $sql = "SELECT * FROM product WHERE product_id = :product_id";

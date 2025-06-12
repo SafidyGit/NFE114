@@ -21,7 +21,7 @@ include 'layout/header.php';
     </button>
 
     <h3>Bienvenue <?php echo $_SESSION['username'];?></h3>
-    
+    <p>Nombre de produits : <?= $count;?></p>
 
 
 

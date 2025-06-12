@@ -16,6 +16,7 @@ $supplierController = new SupplierController();
 // Prendre la valeur '' si pas d'action récupérée.
 $action = $_GET['action'] ?? '';
 if($action === ''){
+    // Aucun paramètre donc on affiche la page login
     $authController->login();
     exit;
 }
