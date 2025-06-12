@@ -21,7 +21,35 @@ include 'layout/header.php';
     </button>
 
     <h3>Bienvenue <?php echo $_SESSION['username'];?></h3>
-    <p>Nombre de produits : <?= $count;?></p>
+    <div class="row">
+      <div class="bg-secondary col col-md-3 text-white p-4 rounded shadow d-flex justify-content-between align-items-center mb-4 m-3" style="min-width: 220px;">
+        <div>
+          <h6 class="text-uppercase fw-bold mb-1">Nombre de produits</h6>
+          <h3 class="m-0"><?= $count_product_in_stock ?? '';?></h3>
+        </div>
+        <div>
+          <i class="bi bi-pc-display-horizontal fs-1 text-light"></i>
+        </div>
+      </div>
+      <div class="bg-secondary col col-md-3 text-white p-4 rounded shadow d-flex justify-content-between align-items-center mb-4 m-3" style="min-width: 220px;">
+        <div>
+          <h6 class="text-uppercase fw-bold mb-1">Nombre de produits epuisés</h6>
+          <h3 class="m-0"><?= $out_of_stock ?? '';?></h3>
+        </div>
+        <div>
+          <i class="bi bi-box-seam fs-1 text-light"></i> 
+        </div>
+      </div>
+      <div class="bg-secondary col col-md-3 text-white p-4 rounded shadow d-flex justify-content-between align-items-center mb-4 m-3" style="min-width: 220px;">
+        <div>
+          <h6 class="text-uppercase fw-bold mb-1">Nombre de produits</h6>
+          <h3 class="m-0"><?= $count_product_in_stock;?></h3>
+        </div>
+        <div>
+          <i class="bi bi-box-seam fs-1 text-light"></i> 
+        </div>
+      </div>
+    </div>
 
 
 

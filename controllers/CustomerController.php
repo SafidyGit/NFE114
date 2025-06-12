@@ -12,7 +12,7 @@ class CustomerController {
         require __DIR__ . '/../views/admin/customer/index.php';
     }
 
-    public function get_customer_by_id($id)
+    public function get_customer_by_id($id) 
     {
         $customerModel = new Customer();
         $customer = $customerModel->getById($id);

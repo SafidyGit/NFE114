@@ -22,14 +22,26 @@ class Product
     
     }
 
-    public function count_all_product()
+    // Methode qui calcule le nombre total des produits en stock
+    public function count_all_product_in_stock()
     {
-        $sql = "SELECT count(product_id) FROM product";
+        $sql = "SELECT SUM(product_quantity_stock) FROM product";
         $stmt = $this->db->query($sql);
 
         $count = $stmt->fetchColumn();
         
         return (int)$count;
+    }
+
+    // Nombre de produit épuisé
+    public function out_of_stock_count()
+    {
+        $sql = "SELECT COUNT(product_reference) FROM product WHERE product_quantity_stock = 0";
+        $stmt = $this->db->query($sql);
+
+        $out_of_stock = $stmt->fetchColumn();
+        
+        return (int)$out_of_stock;
     }
 
     public function getById($product_id)

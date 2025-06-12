@@ -6,9 +6,14 @@ require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
 
+require_once __DIR__ . '/models/Product.php';
+
 $authController = new AuthController();
 $userController = new UserController();
-$adminDashboardController = new AdminDashboardController();
+
+$productModel = new Product();
+$adminDashboardController = new AdminDashboardController($productModel);
+
 $categoryController = new CategoryController();
 $productController = new ProductController();
 $supplierController = new SupplierController();

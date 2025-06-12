@@ -25,13 +25,6 @@ class ProductController
         return $product;
     }
 
-    public function count_product()
-    {
-        $productModel = new Product(); 
-        $count = $productModel->count_all_product();
-        
-        return $count;
-    }
 
     // Méthode qui va afficher le formulaire d'ajout d'un produit
     public function create()
