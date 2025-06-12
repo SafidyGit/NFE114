@@ -22,7 +22,7 @@ class Product
     
     }
 
-    // Methode qui calcule le nombre total des produits en stock
+    // Methode qui retourne le nombre total des produits en stock
     public function count_all_product_in_stock()
     {
         $sql = "SELECT SUM(product_quantity_stock) FROM product";
@@ -42,6 +42,17 @@ class Product
         $out_of_stock = $stmt->fetchColumn();
         
         return (int)$out_of_stock;
+    }
+
+    // Nombre de produit en dessous du seuil
+    public function product_alert_stock()
+    {
+        $sql = "SELECT COUNT(product_reference) FROM product WHERE product_quantity_stock <= product_alert_threshold AND product_quantity_stock > 0";
+        $stmt = $this->db->query($sql);
+
+        $alert_stock = $stmt->fetchColumn();
+        
+        return (int)$alert_stock;
     }
 
     public function getById($product_id)

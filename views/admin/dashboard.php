@@ -37,16 +37,16 @@ include 'layout/header.php';
           <h3 class="m-0"><?= $out_of_stock ?? '';?></h3>
         </div>
         <div>
-          <i class="bi bi-box-seam fs-1 text-light"></i> 
+          <i class="bi bi-dash-circle fs-1 text-danger"></i>
         </div>
       </div>
       <div class="bg-secondary col col-md-3 text-white p-4 rounded shadow d-flex justify-content-between align-items-center mb-4 m-3" style="min-width: 220px;">
         <div>
-          <h6 class="text-uppercase fw-bold mb-1">Nombre de produits</h6>
-          <h3 class="m-0"><?= $count_product_in_stock;?></h3>
+          <h6 class="text-uppercase fw-bold mb-1">Produits sous le seuil</h6>
+          <h3 class="m-0"><?= $alert_stock ?? '';?></h3>
         </div>
         <div>
-          <i class="bi bi-box-seam fs-1 text-light"></i> 
+          <i class="bi bi-exclamation-triangle-fill fs-1 text-warning"></i>
         </div>
       </div>
     </div>
