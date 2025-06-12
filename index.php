@@ -6,13 +6,19 @@ require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
 
-$action = $_GET['action'] ?? null;
 $authController = new AuthController();
 $userController = new UserController();
 $adminDashboardController = new AdminDashboardController();
 $categoryController = new CategoryController();
 $productController = new ProductController();
 $supplierController = new SupplierController();
+
+// Prendre la valeur '' si pas d'action récupérée.
+$action = $_GET['action'] ?? '';
+if($action === ''){
+    $authController->login();
+    exit;
+}
 
 // Authentication
 switch ($action) {
