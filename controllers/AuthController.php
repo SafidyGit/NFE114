@@ -2,13 +2,20 @@
 require_once './models/User.php';
 
 class AuthController {
+
+    private User $userModel;
+
+    public function __construct(User $userModel)
+    {
+        $this->userModel = $userModel;
+    }
+
     public function login(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = htmlspecialchars($_POST['email']);
             $password = $_POST['password'];
 
-            $userModel = new User();
-            $user = $userModel->findByEmail($email);
+            $user = $this->userModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
               

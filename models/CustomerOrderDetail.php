@@ -12,7 +12,8 @@ class CustomerOrderDetail
 
     public function get_all_customer_order_detail()
     {
-        $sql = "SELECT * FROM customerorderdetail ORDER BY customer_order_detail_id DESC";
+        $sql = "SELECT * FROM customerorderdetail 
+                ORDER BY customer_order_detail_id DESC";
         $stmt = $this->db->query($sql);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +22,8 @@ class CustomerOrderDetail
 
     public function getById($customer_order_detail_id)
     {
-        $sql = "SELECT * FROM customerorderdetail WHERE customer_order_detail_id = :customer_order_detail_id";
+        $sql = "SELECT * FROM customerorderdetail 
+                WHERE customer_order_detail_id = :customer_order_detail_id";
         
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':customer_order_detail_id' => $customer_order_detail_id]);
@@ -43,9 +45,13 @@ class CustomerOrderDetail
         ]);
     }
 
-    public function update_customer_order($customer_order_detail_id , $co_quantity, $selling_price, $product_id, $customer_order_id) 
+    public function update_customer_order($customer_order_detail_id , 
+    $co_quantity, $selling_price, $product_id, $customer_order_id) 
     {
-        $sql = "UPDATE customerorderdetail SET co_quantity = :co_quantity, selling_price = :selling_price, product_id = :product_id, customer_order_id = :customer_order_id WHERE customer_order_detail_id = :customer_order_detail_id";
+        $sql = "UPDATE customerorderdetail SET co_quantity = :co_quantity, 
+                selling_price = :selling_price, product_id = :product_id, 
+                customer_order_id = :customer_order_id 
+                WHERE customer_order_detail_id = :customer_order_detail_id";
 
         $stmt = $this->db->prepare($sql);
 

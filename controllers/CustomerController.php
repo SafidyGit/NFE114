@@ -4,18 +4,23 @@ require_once __DIR__ . '/../models/Customer.php';
 
 class CustomerController {
 
+    private Customer $customerModel;
+
+    public function __construct(Customer $customerModel)
+    {
+        $this->customerModel = $customerModel;
+    }
+
     public function index() 
     {
-        $customerModel = new Customer();
-        $customers = $customerModel->get_all_customer();
+        $customers = $this->customerModel->get_all_customer();
 
         require __DIR__ . '/../views/admin/customer/index.php';
     }
 
     public function get_customer_by_id($id) 
     {
-        $customerModel = new Customer();
-        $customer = $customerModel->getById($id);
+        $customer = $this->customerModel->getById($id);
 
         return $customer;
     }
@@ -33,8 +38,7 @@ class CustomerController {
             $customer_phone_number = trim(htmlspecialchars($_POST['customer_phone_number']));
             $customer_email = trim(htmlspecialchars($_POST['customer_email']));
            
-            $customerModel = new Customer();
-            $customerModel->add_customer(
+            $this->customerModel->add_customer(
                 $customer, 
                 $customer_address, 
                 $customer_phone_number, 
@@ -67,8 +71,7 @@ class CustomerController {
             $customer_email = trim(htmlspecialchars($_POST['customer_email']));
            
 
-            $customerModel = new Customer();
-            $customerModel->update_customer(
+            $this->customerModel->update_customer(
                 $customer_id , 
                 $customer, 
                 $customer_address, 
@@ -88,8 +91,7 @@ class CustomerController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $customer_id = $_GET['id'];
 
-            $customerModel = new Customer();
-            $customerModel->delete_customer($customer_id);
+            $this->customerModel->delete_customer($customer_id);
 
             header('Location: /index.php?action=customer_list');
             exit;

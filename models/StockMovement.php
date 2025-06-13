@@ -30,7 +30,8 @@ class StockMovement
 
     public function add_stockmovement($stockmovement, $sm_type, $sm_date, $product_id) 
     {
-        $sql = "INSERT INTO stockmovement (stockmovement, sm_type, sm_date, product_id) VALUES (:stockmovement, :sm_type, :sm_date, :product_id )";
+        $sql = "INSERT INTO stockmovement (stockmovement, sm_type, sm_date, product_id) 
+                VALUES (:stockmovement, :sm_type, :sm_date, :product_id )";
 
         $stmt = $this->db->prepare($sql);
 
@@ -44,7 +45,9 @@ class StockMovement
 
     public function update_stockmovement($sm_id , $stockmovement, $sm_type, $sm_date, $product_id) 
     {
-        $sql = "UPDATE stockmovement SET stockmovement = :stockmovement, sm_type = :sm_type, sm_date = :sm_date, product_id = :product_id WHERE sm_id = :sm_id";
+        $sql = "UPDATE stockmovement SET stockmovement = :stockmovement, 
+                sm_type = :sm_type, sm_date = :sm_date, 
+                product_id = :product_id WHERE sm_id = :sm_id";
 
         $stmt = $this->db->prepare($sql);
 

@@ -4,26 +4,32 @@ require_once __DIR__ . '/../models/Role.php';
 
 class UserController 
 {
+    private User $userModel;
+    private Role $roleModel;
+
+    public function __construct(User $userModel, Role $roleModel)
+    {
+        $this->userModel = $userModel;
+        $this->roleModel = $roleModel;
+    }
+
     public function index() 
     {
-        $userModel = new User();
-        $users = $userModel->get_all_user();
+        $users = $this->userModel->get_all_user();
 
         require __DIR__ . '/../views/admin/user/index.php';
     }
 
     public function get_user_by_id($id)
     {
-        $userModel = new User();
-        $user =$userModel->getById($id);
+        $user =$this->userModel->getById($id);
 
         return $user;
     }
 
     public function create()
     {
-        $roleModel = new Role();
-        $role_list = $roleModel->get_all_role();
+        $role_list = $this->roleModel->get_all_role();
 
         require __DIR__ . '/../views/admin/user/create.php';
     }
@@ -46,8 +52,7 @@ class UserController
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $userModel = new User();
-            $userModel->add_user($username, $email, $hashedPassword, $role_id);
+            $this->userModel->add_user($username, $email, $hashedPassword, $role_id);
 
             header('Location: index.php?action=user_create&success=1');
             exit;
@@ -60,8 +65,7 @@ class UserController
         $id = $_GET['id'];
         $user = $this->get_user_by_id($id);
         
-        $roleModel = new Role();
-        $role_list = $roleModel->get_all_role();
+        $role_list = $this->roleModel->get_all_role();
         
         require __DIR__ . '/../views/admin/user/update.php';
     }
@@ -85,10 +89,8 @@ class UserController
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // var_dump($_POST);
 
-            $userModel = new User();
-            $userModel->update_user($user_id ,$username, $email, $hashedPassword, $role_id);
+            $this->userModel->update_user($user_id ,$username, $email, $hashedPassword, $role_id);
 
             header('Location: /index.php?action=user_list');
 
@@ -103,8 +105,7 @@ class UserController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user_id = $_GET['id'];
 
-            $userModel = new User();
-            $userModel->delete_user($user_id);
+            $this->userModel->delete_user($user_id);
 
             header('Location: /index.php?action=user_list');
             exit;

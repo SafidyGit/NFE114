@@ -12,8 +12,10 @@ class Product
 
     public function get_all_product()
     {
-        $sql = "SELECT * FROM product JOIN supplier, category
-                WHERE product.supplier_id = supplier.supplier_id AND product.category_id = category.category_id
+        $sql = "SELECT * FROM product 
+                JOIN supplier, category
+                WHERE product.supplier_id = supplier.supplier_id 
+                AND product.category_id = category.category_id
                 ORDER BY product_id DESC";
 
         $stmt = $this->db->query($sql);
@@ -36,7 +38,8 @@ class Product
     // Nombre de produit épuisé
     public function out_of_stock_count()
     {
-        $sql = "SELECT COUNT(product_reference) FROM product WHERE product_quantity_stock = 0";
+        $sql = "SELECT COUNT(product_reference) 
+                FROM product WHERE product_quantity_stock = 0";
         $stmt = $this->db->query($sql);
 
         $out_of_stock = $stmt->fetchColumn();
@@ -47,7 +50,10 @@ class Product
     // Nombre de produit en dessous du seuil
     public function product_alert_stock()
     {
-        $sql = "SELECT COUNT(product_reference) FROM product WHERE product_quantity_stock <= product_alert_threshold AND product_quantity_stock > 0";
+        $sql = "SELECT COUNT(product_reference) 
+                FROM product 
+                WHERE product_quantity_stock <= product_alert_threshold
+                AND product_quantity_stock > 0";
         $stmt = $this->db->query($sql);
 
         $alert_stock = $stmt->fetchColumn();
@@ -57,10 +63,11 @@ class Product
 
     public function totalProductsByCategory()
     {
-        $sql = "SELECT category.category, SUM(product.product_quantity_stock) AS 'Total'  
-        FROM product JOIN
-        category ON 
-        product.category_id = category.category_id GROUP BY category.category";
+        $sql = "SELECT category.category, 
+                SUM(product.product_quantity_stock) AS 'Total'  
+                FROM product JOIN category 
+                ON product.category_id = category.category_id 
+                GROUP BY category.category";
 
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -78,9 +85,19 @@ class Product
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function add_product($product_reference, $product_name, $product_description, $product_quantity_stock, $product_alert_threshold, $product_unit_price, $supplier_id, $category_id) 
+    public function add_product($product_reference, $product_name,
+     $product_description, $product_quantity_stock,
+      $product_alert_threshold, $product_unit_price, 
+      $supplier_id, $category_id) 
     {
-        $sql = "INSERT INTO product (product_reference, product_name, product_description, product_quantity_stock, product_alert_threshold, product_unit_price, supplier_id, category_id) VALUES (:product_reference, :product_name, :product_description, :product_quantity_stock, :product_alert_threshold, :product_unit_price, :supplier_id, :category_id)";
+        $sql = "INSERT INTO product (product_reference, 
+        product_name, product_description, product_quantity_stock, 
+        product_alert_threshold, product_unit_price, supplier_id, 
+        category_id) 
+        VALUES (:product_reference, :product_name, 
+        :product_description, :product_quantity_stock, 
+        :product_alert_threshold, :product_unit_price,
+         :supplier_id, :category_id)";
 
         $stmt = $this->db->prepare($sql);
 
@@ -96,9 +113,20 @@ class Product
         ]);
     }
 
-    public function update_product($product_id , $product_reference, $product_name, $product_description, $product_quantity_stock, $product_alert_threshold, $product_unit_price, $supplier_id, $category_id) 
+    public function update_product($product_id , $product_reference, 
+    $product_name, $product_description, $product_quantity_stock, 
+    $product_alert_threshold, $product_unit_price, $supplier_id, $category_id) 
     {
-        $sql = "UPDATE product SET product_reference = :product_reference, product_name = :product_name, product_description = :product_description, product_quantity_stock = :product_quantity_stock, product_alert_threshold = :product_alert_threshold, product_unit_price = :product_unit_price, supplier_id = :supplier_id, category_id = :category_id WHERE product_id = :product_id";
+        $sql = "UPDATE product SET 
+            product_reference = :product_reference, 
+            product_name = :product_name, 
+            product_description = :product_description, 
+            product_quantity_stock = :product_quantity_stock, 
+            product_alert_threshold = :product_alert_threshold, 
+            product_unit_price = :product_unit_price, 
+            supplier_id = :supplier_id, 
+            category_id = :category_id 
+            WHERE product_id = :product_id";
 
         $stmt = $this->db->prepare($sql);
 

@@ -4,19 +4,23 @@ require_once __DIR__ . '/../models/CustomerOrder.php';
 
 class CustomerOrderController 
 {
+    private CustomerOrder $customerOrderModel;
+
+    public function __construct(CustomerOrder $customerOrderModel)
+    {
+        $this->customerOrderModel = $customerOrderModel;
+    }
 
     public function index() 
     {
-        $customerOrderModel = new CustomerOrder();
-        $customer_orders = $customerOrderModel->get_all_customer_order();
+        $customer_orders = $this->customerOrderModel->get_all_customer_order();
 
         require __DIR__ . '/../views/admin/customer_order/index.php';
     }
 
     public function get_customer_by_id($id)
     {
-        $customerOrderModel = new CustomerOrder();
-        $customer = $customerOrderModel->getById($id);
+        $customer = $this->customerOrderModel->getById($id);
 
         return $customer;
     }
@@ -34,8 +38,7 @@ class CustomerOrderController
             $customer_order_status = trim(htmlspecialchars($_POST['customer_order_status']));
             $customer_id = trim(htmlspecialchars($_POST['customer_id']));
            
-            $customerOrderModel = new CustomerOrder();
-            $customerOrderModel->add_customer_order(
+            $this->customerOrderModel->add_customer_order(
                 $customer_order_reference, 
                 $customer_order_date, 
                 $customer_order_status, 
@@ -68,8 +71,7 @@ class CustomerOrderController
             $customer_id = trim(htmlspecialchars($_POST['customer_id']));
            
 
-            $customerOrderModel = new CustomerOrder();
-            $customerOrderModel->update_customer_order(
+            $this->customerOrderModel->update_customer_order(
                 $customer_order_id , 
                 $customer_order_reference, 
                 $customer_order_date, 
@@ -89,8 +91,7 @@ class CustomerOrderController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $customer_order_id = $_GET['id'];
 
-            $customerOrderModel = new CustomerOrder();
-            $customerOrderModel->delete_customer_order($customer_order_id);
+            $this->customerOrderModel->delete_customer_order($customer_order_id);
 
             header('Location: /index.php?action=customer_order_list');
             exit;

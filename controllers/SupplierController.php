@@ -2,20 +2,25 @@
 
 require_once __DIR__ . '/../models/Supplier.php';
 
-class SupplierController {
+class SupplierController 
+{
+    private Supplier $supplierModel;
+
+    public function __construct(Supplier $supplierModel)
+    {
+        $this->supplierModel = $supplierModel;
+    }
 
     public function index() 
     {
-        $supplierModel = new Supplier();
-        $suppliers = $supplierModel->get_all_supplier();
+        $suppliers = $this->supplierModel->get_all_supplier();
 
         require __DIR__ . '/../views/admin/supplier/index.php';
     }
 
     public function get_supplier_by_id($id)
     {
-        $supplierModel = new Supplier();
-        $supplier = $supplierModel->getById($id);
+        $supplier = $this->supplierModel->getById($id);
 
         return $supplier;
     }
@@ -33,8 +38,7 @@ class SupplierController {
             $supplier_phone_number = trim(htmlspecialchars($_POST['supplier_phone_number']));
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
-            $supplierModel = new Supplier();
-            $supplierModel->add_supplier(
+            $this->supplierModel->add_supplier(
                 $supplier, 
                 $supplier_address, 
                 $supplier_phone_number, 
@@ -67,8 +71,7 @@ class SupplierController {
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
 
-            $supplierModel = new Supplier();
-            $supplierModel->update_supplier(
+            $this->supplierModel->update_supplier(
                 $supplier_id , 
                 $supplier, 
                 $supplier_address, 
@@ -88,8 +91,7 @@ class SupplierController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $supplier_id = $_GET['id'];
 
-            $supplierModel = new Supplier();
-            $supplierModel->delete_supplier($supplier_id);
+            $this->supplierModel->delete_supplier($supplier_id);
 
             header('Location: /index.php?action=supplier_list');
             exit;

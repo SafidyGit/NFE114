@@ -1,4 +1,19 @@
 <?php
+// MODELS
+require_once __DIR__ . '/models/User.php';
+require_once __DIR__ . '/models/Role.php';
+require_once __DIR__ . '/models/Product.php';
+require_once __DIR__ . '/models/Category.php';
+require_once __DIR__ . '/models/Supplier.php';
+
+$userModel = new User();
+$roleModel = new Role();
+$productModel = new Product();
+$categoryModel = new Category();
+$supplierModel = new Supplier();
+
+
+// CONTROLLERS
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/AdminDashboardController.php';
@@ -6,18 +21,15 @@ require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
 
-require_once __DIR__ . '/models/Product.php';
-
-$authController = new AuthController();
-$userController = new UserController();
-
-$productModel = new Product();
+$authController = new AuthController($userModel);
+$userController = new UserController($userModel, $roleModel);
 $adminDashboardController = new AdminDashboardController($productModel);
+$productController = new ProductController($productModel, $categoryModel, $supplierModel);
+$categoryController = new CategoryController($categoryModel);
+$supplierController = new SupplierController($supplierModel);
 
-$categoryController = new CategoryController();
-$productController = new ProductController();
-$supplierController = new SupplierController();
 
+// ROUTING
 // Prendre la valeur '' si pas d'action récupérée.
 $action = $_GET['action'] ?? '';
 if($action === ''){
