@@ -37,8 +37,8 @@
             <td><?= $product['product_quantity_stock']; ?></td>
             <td><?= $product['product_alert_threshold']; ?></td>
             <td><?= $product['product_unit_price']; ?></td>
-            <td><?= $product['supplier_id'] .' : '. $product['supplier']; ?></td>
-            <td><?= $product['category_id'] .' : '. $product['category']; ?></td>
+            <td><?= $product['supplier']; ?></td>
+            <td><?= $product['category']; ?></td>
             <td class="d-flex align-items-center gap-2">
                 <a href="index.php?action=product_edit&id=<?= $product['product_id']?>&categorie=<?=$product['category_id']?>&fournisseur=<?=$product['supplier_id']?>">
                     <button class="btn btn-sm btn-primary">Modifier</button>

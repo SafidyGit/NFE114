@@ -5,7 +5,8 @@ class AdminDashboardController
 {
     private Product $productModel;
 
-    public function __construct(Product $productModel) {
+    public function __construct(Product $productModel) 
+    {
         $this->productModel = $productModel;
     }
 
@@ -18,20 +19,6 @@ class AdminDashboardController
 
         require __DIR__ . '/../views/admin/dashboard.php';
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 ?>

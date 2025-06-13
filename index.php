@@ -5,12 +5,14 @@ require_once __DIR__ . '/models/Role.php';
 require_once __DIR__ . '/models/Product.php';
 require_once __DIR__ . '/models/Category.php';
 require_once __DIR__ . '/models/Supplier.php';
+require_once __DIR__ . '/models/SupplierOrder.php';
 
 $userModel = new User();
 $roleModel = new Role();
 $productModel = new Product();
 $categoryModel = new Category();
 $supplierModel = new Supplier();
+$supplierOrderModel = new SupplierOrder();
 
 
 // CONTROLLERS
@@ -20,6 +22,7 @@ require_once __DIR__ . '/controllers/AdminDashboardController.php';
 require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
+require_once __DIR__ . '/controllers/SupplierOrderController.php';
 
 $authController = new AuthController($userModel);
 $userController = new UserController($userModel, $roleModel);
@@ -27,6 +30,7 @@ $adminDashboardController = new AdminDashboardController($productModel);
 $productController = new ProductController($productModel, $categoryModel, $supplierModel);
 $categoryController = new CategoryController($categoryModel);
 $supplierController = new SupplierController($supplierModel);
+$supplierOrderController = new SupplierOrderController($supplierOrderModel, $supplierModel, $productModel);
 
 
 // ROUTING
@@ -57,7 +61,6 @@ switch ($action) {
         $userController->index();
         break;
 
-    // Possible si pas de compte connecté ??? Pas encore OK
     case 'user_create':
         $userController->create();
         break;
@@ -132,6 +135,11 @@ switch ($action) {
         break;
     case 'supplier_delete':
         $supplierController->delete();
+        break;
+
+    
+    case 'supplier_order_create':
+        $supplierOrderController->create();
         break;
 
     default:
