@@ -15,9 +15,10 @@
   </div>
 <?php endif; ?>
 
+<?php echo 'last supplier_order_id' . $next_supplier_order_id?>
 
 <div class="bg-dark text-white p-4 rounded shadow mb-4" style="max-width: 1000px;">
-  <form method="POST" action="/index.php?action=supplier_store">
+  <form method="POST" action="/index.php?action=supplier_order_store&selected_product_id=<?=$selected_product_id;?>">
     
     <div class="row">
       <div class="col-md-3 mb-3">
@@ -62,7 +63,9 @@
       </div>
       <div class="col-md-3 mb-3">
         <label for="supplier_order_reference" class="form-label">Prix d'achat</label>
-        <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" name="purchase_price" required>
+        <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
+        <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
+        name="purchase_price" value="<?= $product['product_unit_price'] ?? ''?>" required>
       </div>
 
 
@@ -72,12 +75,18 @@
         <input type="text" class="form-control  bg-secondary text-white border-0 shadow-none" name="user_id" value="<?=$_SESSION['user_id'];?>" disabled required>
       </div>
 
-      
       <div class="col-md-3 mb-3">
-        <label for="category_id" class="form-label">Produit</label>
-        <select class="form-select bg-secondary text-white border-0 shadow-none" name="category_id" required>
+        <label for="product_id" class="form-label">Produit</label>
+        <!-- Du js-->
+         <!-- 
+            Recupération de value de l'option dans l'url
+            onchange="window.location.href='?action=supplier_order_create&selected_product_id=' + this.value"
+         -->
+        <select onchange="window.location.href='?action=supplier_order_create&selected_product_id=' + this.value"
+        class="form-select bg-secondary text-white border-0 shadow-none" name="product_id" required>
           <?php foreach($product_list as $product): ?>
-          <option value="<?=$product['product_id']?>">
+          <option value="<?=$product['product_id']?>" 
+          <?= $selected_product_id == $product['product_id'] ? 'selected' : '';?>>
               <?=$product['product_id']?> | <?=$product['product_name']?>
           </option>
           <?php endforeach; ?>
@@ -138,11 +147,6 @@
     <?php endif;?>
     </table>
 </div>
-
-
-
-
-
 
 </div>
 

@@ -28,16 +28,17 @@ class SupplierOrderDetail
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function add_supplier_order_detail($so_quantity, $purchase_price, $product_id, $supplier_order_id) 
+    public function add_supplier_order_detail($so_quantity, $purchase_price, $user_id ,$product_id, $supplier_order_id) 
     {
-        $sql = "INSERT INTO supplierorderdetail (so_quantity, purchase_price, product_id, supplier_order_id) 
-        VALUES (:so_quantity, :purchase_price, :product_id, :supplier_order_id )";
+        $sql = "INSERT INTO supplierorderdetail (so_quantity, purchase_price, user_id ,product_id, supplier_order_id) 
+        VALUES (:so_quantity, :purchase_price, :user_id, :product_id, :supplier_order_id )";
 
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
             ':so_quantity' => $so_quantity,
             ':purchase_price' => $purchase_price,
+            ':user_id' => $user_id,
             ':product_id' => $product_id,
             ':supplier_order_id' => $supplier_order_id,
         ]);

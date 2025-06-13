@@ -28,6 +28,18 @@ class SupplierOrder
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
+    // Méthode qui va récuperer le dernier id dans supplier order
+    public function get_last_id_supplier_order()
+    {
+        $sql = "SELECT MAX(supplier_order_id) FROM supplierorder" ;
+        $stmt = $this->db->query($sql);
+
+        $supplier_last_id = $stmt->fetchColumn();
+        
+        return (int)$supplier_last_id;
+    }
+
     public function add_supplier_order($supplier_order_reference, $supplier_order_date, $supplier_order_status, $supplier_id) 
     {
         $sql = "INSERT INTO supplierorder (supplier_order_reference, supplier_order_date, supplier_order_status, supplier_id) VALUES (:supplier_order_reference, :supplier_order_date, :supplier_order_status, :supplier_id )";
@@ -63,6 +75,26 @@ class SupplierOrder
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':supplier_order_id' => $supplier_order_id]);
     }
+
+
+    // Mettre à jour le nombre et prix du produits depuis la commande client
+    public function update_product_from_supplier_order($product_id, $product_quantity_stock, $product_unit_price) 
+    {
+        $sql = "UPDATE product SET 
+            product_quantity_stock = :product_quantity_stock, 
+            product_unit_price = :product_unit_price, 
+            WHERE product_id = :product_id";
+
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':product_quantity_stock' => $product_quantity_stock, 
+            ':product_unit_price' => $product_unit_price, 
+            ':product_id' => $product_id
+
+        ]);
+    }
+
 
 }
 

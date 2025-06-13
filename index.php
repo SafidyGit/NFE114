@@ -6,6 +6,7 @@ require_once __DIR__ . '/models/Product.php';
 require_once __DIR__ . '/models/Category.php';
 require_once __DIR__ . '/models/Supplier.php';
 require_once __DIR__ . '/models/SupplierOrder.php';
+require_once __DIR__ . '/models/SupplierOrderDetail.php';
 
 $userModel = new User();
 $roleModel = new Role();
@@ -13,6 +14,7 @@ $productModel = new Product();
 $categoryModel = new Category();
 $supplierModel = new Supplier();
 $supplierOrderModel = new SupplierOrder();
+$supplierOrderDetailModel = new SupplierOrderDetail();
 
 
 // CONTROLLERS
@@ -30,7 +32,7 @@ $adminDashboardController = new AdminDashboardController($productModel);
 $productController = new ProductController($productModel, $categoryModel, $supplierModel);
 $categoryController = new CategoryController($categoryModel);
 $supplierController = new SupplierController($supplierModel);
-$supplierOrderController = new SupplierOrderController($supplierOrderModel, $supplierModel, $productModel);
+$supplierOrderController = new SupplierOrderController($supplierOrderModel, $supplierModel, $productModel, $supplierOrderDetailModel);
 
 
 // ROUTING
@@ -140,6 +142,9 @@ switch ($action) {
     
     case 'supplier_order_create':
         $supplierOrderController->create();
+        break;
+    case 'supplier_order_store':
+        $supplierOrderController->update_product_from_supplierOrder();
         break;
 
     default:
