@@ -140,6 +140,9 @@ switch ($action) {
         break;
 
     
+    case 'supplier_order_list':
+        $supplierOrderController->index();
+        break;
     case 'supplier_order_create':
         $supplierOrderController->create();
         break;

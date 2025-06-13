@@ -40,6 +40,7 @@ class SupplierOrderController
         $supplier_list = $this->supplierModel->get_all_supplier();
         $product_list = $this->productModel->get_all_product();
 
+
         // Recuperer l'id du produit via le select , null si id n'existe pas
         $selected_product_id = $_GET['selected_product_id'] ?? null;
         // Recup de l'id de produit pour pouvoir recup le prix dans un value
@@ -80,6 +81,7 @@ class SupplierOrderController
     }
 
 
+    // Enregistrement sur SupplierOrder et SupplierOrderDetail (commande Fournisseur) et update sur Produit
     public function update_product_from_supplierOrder()
     {
         // récuperer le prochain supplier_order_id
@@ -89,24 +91,37 @@ class SupplierOrderController
         $product_quantity = $product_for_quantity_operation['product_quantity_stock'];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Opération sur la commande Fournisseur
+            // Récuperation des valeurs entrées danss les champs pour commande Fournisseur
             $supplier_order_reference = trim(htmlspecialchars($_POST['supplier_order_reference']));
             $supplier_order_date = trim(htmlspecialchars($_POST['supplier_order_date']));
             $supplier_order_status = trim(htmlspecialchars($_POST['supplier_order_status']));
             $supplier_id = trim(htmlspecialchars($_POST['supplier_id']));
            
-            // Opération sur la commande Fournisseur Detail
+            // Récuperation des valeurs entrées danss les champs pour commande Detail Fournisseur 
             $so_quantity = trim(htmlspecialchars($_POST['so_quantity']));
             $purchase_price = trim(htmlspecialchars($_POST['purchase_price']));
+            // Fonction accessible pour l'admin seulement donc user_id = 1
             $user_id = 1;
             $supplier_order_id = $next_supplier_order_id;
            
-            // Opération sur le Produit
+            // Récuperation des valeurs entrées dans les champs de Produit
             $product_id = $_GET['selected_product_id'];
+            // Produit en stock = produit entré + stock actuel
             $product_quantity_stock = $so_quantity + $product_quantity;
             $product_unit_price = $purchase_price;
 
+            // Appel à la fonction add_supplier_order() pour 
+            // enregistrer une ligne dans la table supplierorder
+            $this->supplierOrderModel->add_supplier_order(
+                $supplier_order_reference, 
+                $supplier_order_date, 
+                $supplier_order_status, 
+                $supplier_id
 
+            );
+
+            // Appel à la fonction add_supplier_order_detail() pour 
+            // enregistrer une ligne dans la table supplier_order_detail
             $this->supplierOrderDetailModel->add_supplier_order_detail(
                 $so_quantity, 
                 $purchase_price, 
@@ -116,14 +131,8 @@ class SupplierOrderController
 
             );
 
-            $this->supplierOrderModel->add_supplier_order(
-                $supplier_order_reference, 
-                $supplier_order_date, 
-                $supplier_order_status, 
-                $supplier_id
-
-            );
-
+            // Appel à la fonction update_product_from_supplier_order() dans models/supplierOrder.php
+            // Mise à jour de la quantité en stock / update prix possible
             $this->supplierOrderModel->update_product_from_supplier_order(
                 $product_id , 
                 $product_quantity_stock, 
@@ -133,7 +142,7 @@ class SupplierOrderController
             // var_dump($_POST);
             // exit;
 
-            header('Location: views/admin/supplier_order/create.php?success=1');
+            header('Location: index.php?action=supplier_order_create&success=1');
             exit;
         } else {
             require 'views/admin/supplier_order/create.php';

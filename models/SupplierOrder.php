@@ -12,7 +12,25 @@ class SupplierOrder
 
     public function get_all_supplier_order()
     {
-        $sql = "SELECT * FROM supplierorder ORDER BY supplier_order_id DESC";
+
+                $sql = "SELECT 
+                supplierorderdetail.so_quantity, 
+                supplierorderdetail.purchase_price,
+                supplierorder.supplier_order_date, 
+                supplierorder.supplier_order_reference,
+                supplierorder.supplier_order_status, 
+                supplier.supplier,
+                product.product_name, 
+                (supplierorderdetail.so_quantity * supplierorderdetail.purchase_price) AS 'total_price'
+                FROM supplierorder
+                JOIN supplierorderdetail 
+                ON supplierorder.supplier_order_id = supplierorderdetail.supplier_order_id
+                JOIN supplier 
+                ON supplierorder.supplier_id = supplier.supplier_id
+                LEFT JOIN product 
+                ON supplierorderdetail.product_id = product.product_id
+                ORDER BY supplierorder.supplier_order_id DESC";
+
         $stmt = $this->db->query($sql);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,12 +95,12 @@ class SupplierOrder
     }
 
 
-    // Mettre à jour le nombre et prix du produits depuis la commande client
+    // Mettre à jour le nombre et prix du produits depuis la commande fournisseur
     public function update_product_from_supplier_order($product_id, $product_quantity_stock, $product_unit_price) 
     {
         $sql = "UPDATE product SET 
             product_quantity_stock = :product_quantity_stock, 
-            product_unit_price = :product_unit_price, 
+            product_unit_price = :product_unit_price
             WHERE product_id = :product_id";
 
         $stmt = $this->db->prepare($sql);

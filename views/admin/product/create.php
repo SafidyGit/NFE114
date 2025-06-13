@@ -1,8 +1,5 @@
 <?php include __DIR__. '/../layout/header.php';?>
 
-<?php if (isset($_GET['success'])): ?>
-    <p style="color:green;">Produits ajoutée avec succès !</p>
-<?php endif; ?>
 
 <!-- Main Content -->
 <div class="flex-grow-1 p-3 mt-5">
@@ -12,6 +9,13 @@
     </button>
 
 <h3>Ajouter un produit</h3>
+
+<?php if (isset($_GET['success'])): ?>
+  <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0 shadow" role="alert" style="max-width: 600px;">
+    <strong>Succès !</strong> Produit ajouté avec succès !
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<?php endif; ?>
 
 <div class="bg-dark text-white p-4 rounded shadow mb-4" style="max-width: 1000px;">
   <form method="POST" action="/index.php?action=product_store">

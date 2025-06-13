@@ -15,8 +15,6 @@
   </div>
 <?php endif; ?>
 
-<?php echo 'last supplier_order_id' . $next_supplier_order_id?>
-
 <div class="bg-dark text-white p-4 rounded shadow mb-4" style="max-width: 1000px;">
   <form method="POST" action="/index.php?action=supplier_order_store&selected_product_id=<?=$selected_product_id;?>">
     
@@ -27,15 +25,12 @@
       </div>
 
       <div class="col-md-3 mb-3">
-        <label for="category_id" class="form-label">Fournisseur</label>
-        <select class="form-select bg-secondary text-white border-0 shadow-none" name="supplier_id" required>
-          <?php foreach($supplier_list as $supplier): ?>
-          <option value="<?=$supplier['supplier_id']?>">
-              <?=$supplier['supplier_id']?> | <?=$supplier['supplier']?>
-          </option>
-          <?php endforeach; ?>
-        </select>
+            <label for="supplier_id" class="form-label">Fournisseur</label>
+            <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
+            <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
+            name="supplier_id" value="<?= $product['supplier_id'] ?? ''?>" required>
       </div>
+
 
       <div class="col-md-3 mb-3">
         <label for="supplier_order_date" class="form-label">Date de la commande</label>
@@ -44,15 +39,15 @@
 
       
       <div class="col-md-3 mb-3">
-        <label for="category_id" class="form-label">Status de la commande</label>
+        <label for="supplier_order_status" class="form-label">Status de la commande</label>
         <select class="form-select bg-secondary text-white border-0 shadow-none" name="supplier_order_status" required>
-          <option value="supplier_order_status">
+          <option>
               En attente
           </option>
-          <option value="supplier_order_status">
+          <option>
               En cours
           </option>
-          <option value="supplier_order_status">
+          <option>
               Livrée
           </option>
         </select>
