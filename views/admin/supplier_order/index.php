@@ -8,8 +8,6 @@
     </button>
 
     <h3>Liste commandes</h3>
-    <!-- <a href="../../../index.php?action=product_create">Ajouter un produit</a> -->
-
 <div class="table-responsive bg-dark p-3 rounded shadow">
     <table class="table table-dark table-striped table-hover table-bordered mb-0">
     <thead>
@@ -22,6 +20,7 @@
         <th>Fournisseur</th>
         <th>prix (€)</th>
         <th>Montant (€)</th>
+        <th></th>
     </tr>
     </thead>
     <?php if(!empty($supplier_orders)):?>
@@ -36,6 +35,15 @@
             <td><?= $supplier_order['supplier']; ?></td>
             <td><?= $supplier_order['purchase_price']; ?></td>
             <td><?= $supplier_order['total_price']; ?></td>
+            <td>
+                <?php if($supplier_order['supplier_order_status'] === 'Livrée'):?>
+                    <button class="btn btn-sm btn-success">Livrée</button>
+                <?php else:?>
+                <a href="index.php?action=supplier_order_edit&id=<?= $supplier_order['supplier_order_id'];?>">
+                    <button class="btn btn-sm btn-warning">Valider</button>
+                </a>
+                <?php endif;?>
+            </td>
         </tr>
         
     <?php endforeach; ?>

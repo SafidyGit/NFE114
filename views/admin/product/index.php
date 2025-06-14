@@ -19,7 +19,7 @@
         <th>Nom</th>
         <th>Déscription</th>
         <th>quantité en stock</th>
-        <th>seuil d'alerte</th>
+        <th>seuil</th>
         <th>prix unitaire</th>
         <th>Fourniseur</th>
         <th>Categorie</th>

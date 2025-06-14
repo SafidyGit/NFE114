@@ -77,11 +77,10 @@ class ProductController
             );
 
             // Redirection vers la page create.php avec un message de succès
-            header('Location: views/admin/product/create.php?success=1');
+            header('Location: index.php?action=product_create&success=1');
             exit;
         } else {
-            require 'views/admin/product/create.php';
-        
+            header('Location: index.php?action=product_create');
         }
     }
 

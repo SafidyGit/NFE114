@@ -12,24 +12,24 @@ class SupplierOrder
 
     public function get_all_supplier_order()
     {
-
-                $sql = "SELECT 
-                supplierorderdetail.so_quantity, 
-                supplierorderdetail.purchase_price,
-                supplierorder.supplier_order_date, 
-                supplierorder.supplier_order_reference,
-                supplierorder.supplier_order_status, 
-                supplier.supplier,
-                product.product_name, 
-                (supplierorderdetail.so_quantity * supplierorderdetail.purchase_price) AS 'total_price'
-                FROM supplierorder
-                JOIN supplierorderdetail 
-                ON supplierorder.supplier_order_id = supplierorderdetail.supplier_order_id
-                JOIN supplier 
-                ON supplierorder.supplier_id = supplier.supplier_id
-                LEFT JOIN product 
-                ON supplierorderdetail.product_id = product.product_id
-                ORDER BY supplierorder.supplier_order_id DESC";
+        $sql = "SELECT 
+        supplierorderdetail.so_quantity, 
+        supplierorderdetail.purchase_price,
+        supplierorder.supplier_order_id, 
+        supplierorder.supplier_order_date, 
+        supplierorder.supplier_order_reference,
+        supplierorder.supplier_order_status, 
+        supplier.supplier,
+        product.product_name, 
+        (supplierorderdetail.so_quantity * supplierorderdetail.purchase_price) AS 'total_price'
+        FROM supplierorder
+        JOIN supplierorderdetail 
+        ON supplierorder.supplier_order_id = supplierorderdetail.supplier_order_id
+        JOIN supplier 
+        ON supplierorder.supplier_id = supplier.supplier_id
+        LEFT JOIN product 
+        ON supplierorderdetail.product_id = product.product_id
+        ORDER BY supplierorder.supplier_order_id DESC";
 
         $stmt = $this->db->query($sql);
         

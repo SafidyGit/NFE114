@@ -8,6 +8,7 @@
     </button>
 
 <h3>Commander</h3>
+<p>La date du jour : <?= $date?></p>
 <?php if (isset($_GET['success'])): ?>
   <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0 shadow" role="alert" style="max-width: 600px;">
     <strong>Succès !</strong> Commande ajouté avec succès !
@@ -24,17 +25,17 @@
         <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_order_reference" required>
       </div>
 
+      <!-- <div class="col-md-3 mb-3">
+            <label for="supplier_id" class="form-label">Fournisseur</label> -->
+            <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
+            <!-- <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" 
+            name="supplier_id" value="<?php // $product['supplier'] ?? ''?>" disabled>
+      </div> -->
       <div class="col-md-3 mb-3">
             <label for="supplier_id" class="form-label">Fournisseur</label>
             <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
             <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
             name="supplier_id" value="<?= $product['supplier_id'] ?? ''?>" required>
-      </div>
-
-
-      <div class="col-md-3 mb-3">
-        <label for="supplier_order_date" class="form-label">Date de la commande</label>
-        <input type="date" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_order_date" required>
       </div>
 
       
@@ -45,30 +46,28 @@
               En attente
           </option>
           <option>
-              En cours
-          </option>
-          <option>
               Livrée
           </option>
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <label for="supplier_order_reference" class="form-label">Quantité à commander</label>
-        <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" name="so_quantity" required>
+        <input type="number" min=1 class="form-control bg-secondary text-white border-0 shadow-none" name="so_quantity" required>
       </div>
       <div class="col-md-3 mb-3">
         <label for="supplier_order_reference" class="form-label">Prix d'achat</label>
         <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
         <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
-        name="purchase_price" value="<?= $product['product_unit_price'] ?? ''?>" required>
+        name="purchase_price" min=1 value="<?= $product['product_unit_price'] ?? ''?>" required>
       </div>
 
 
       <!-- Pas Afficher à l'ecran -->
-      <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3 d-none">
         <label for="user_id" class="form-label">User</label>
-        <input type="text" class="form-control  bg-secondary text-white border-0 shadow-none" name="user_id" value="<?=$_SESSION['user_id'];?>" disabled required>
+        <input type="text" class="form-control  bg-secondary text-white border-0 shadow-none" name="user_id" value="<?=$_SESSION['user_id'];?>" required>
       </div>
+      <!-- --------------------------------- -->
 
       <div class="col-md-3 mb-3">
         <label for="product_id" class="form-label">Produit</label>

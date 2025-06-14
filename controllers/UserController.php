@@ -46,7 +46,7 @@ class UserController
             $role_id = $_POST['role_id'];
 
             if($password !== $confirm_password){
-                header('Location: /index.php?action=user_create&error=password_mismatch');
+                header('Location: index.php?action=user_create&error=password_mismatch');
                 exit;
             }
 
@@ -83,7 +83,7 @@ class UserController
             $role_id = $_POST['role_id'];
 
             if($password !== $confirm_password){
-                header('Location: /index.php?action=user_edit&error=password_mismatch&id='.$user_id);
+                header('Location: index.php?action=user_edit&error=password_mismatch&id='.$user_id);
                 exit;
             }
 
@@ -92,11 +92,11 @@ class UserController
 
             $this->userModel->update_user($user_id ,$username, $email, $hashedPassword, $role_id);
 
-            header('Location: /index.php?action=user_list');
+            header('Location: index.php?action=user_list');
 
             exit;
             } else {
-                require 'index.php?user_edit';
+                header('Location: index.php?action=user_list');
             }
         }
 
@@ -107,10 +107,10 @@ class UserController
 
             $this->userModel->delete_user($user_id);
 
-            header('Location: /index.php?action=user_list');
+            header('Location: index.php?action=user_list');
             exit;
         } else {
-            require '/index.php?action=user_list';
+            header('Location: index.php?action=user_list');
         }
     }
 

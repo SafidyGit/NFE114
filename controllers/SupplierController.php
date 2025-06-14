@@ -45,10 +45,10 @@ class SupplierController
                 $supplier_email
             );
 
-            header('Location: views/admin/supplier/create.php?success=1');
+            header('Location: index.php?action=supplier_create&success=1');
             exit;
         } else {
-            require 'views/admin/supplier/create.php';
+            header('Location: index.php?action=supplier_create');
         
         }
     }
@@ -79,10 +79,10 @@ class SupplierController
                 $supplier_email
             );
 
-            header('Location: /index.php?action=supplier_list');
+            header('Location: index.php?action=supplier_list');
             exit;
         } else {
-            require 'index.php?action=supplier_list';
+            header('Location: index.php?action=supplier_list');
         
         }
     }
@@ -93,10 +93,10 @@ class SupplierController
 
             $this->supplierModel->delete_supplier($supplier_id);
 
-            header('Location: /index.php?action=supplier_list');
+            header('Location: index.php?action=supplier_list');
             exit;
         } else {
-            require '/index.php?action=supplier_list';
+            header('Location: index.php?action=supplier_list');
         }
     }
     

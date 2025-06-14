@@ -147,7 +147,10 @@ switch ($action) {
         $supplierOrderController->create();
         break;
     case 'supplier_order_store':
-        $supplierOrderController->update_product_from_supplierOrder();
+        $supplierOrderController->store();
+        break;
+    case 'supplier_order_edit':
+        $supplierOrderController->edit();
         break;
 
     default:
