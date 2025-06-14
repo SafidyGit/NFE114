@@ -164,17 +164,6 @@ class SupplierOrderController
             }
     }    
     
-    public function edit()
-    {
-        $id = $_GET['id'];
-        $supplier_order = $this->get_customer_by_id($id);
-
-        require __DIR__ . '/../views/admin/supplier_order/update.php';
-    }
-
-
-
-
 
     public function update()
     {

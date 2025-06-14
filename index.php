@@ -149,9 +149,6 @@ switch ($action) {
     case 'supplier_order_store':
         $supplierOrderController->store();
         break;
-    case 'supplier_order_edit':
-        $supplierOrderController->edit();
-        break;
     case 'supplier_order_validate':
         $supplierOrderController->validate();
         break;
