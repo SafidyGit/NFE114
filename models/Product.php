@@ -78,7 +78,10 @@ class Product
 
     public function getById($product_id)
     {
-        $sql = "SELECT * FROM product WHERE product_id = :product_id";
+        $sql = "SELECT * 
+        FROM product 
+        JOIN supplier ON product.supplier_id = supplier.supplier_id
+        WHERE product_id = :product_id";
         
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['product_id' => $product_id]);

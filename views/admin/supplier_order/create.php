@@ -25,17 +25,19 @@
         <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_order_reference" value="REF-0<?=$next_supplier_order_id ?>" readonly required>
       </div>
 
-      <!-- <div class="col-md-3 mb-3">
-            <label for="supplier_id" class="form-label">Fournisseur</label> -->
-            <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
-            <!-- <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" 
-            name="supplier_id" value="<?php // $product['supplier'] ?? ''?>" disabled>
-      </div> -->
-      <div class="col-md-3 mb-3">
+      <!-- Valeur recuperée dans le post mais le champs n'est pas visible -->
+      <div class="col-md-3 mb-3 d-none">
             <label for="supplier_id" class="form-label">Fournisseur</label>
             <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
             <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
             name="supplier_id" value="<?= $product['supplier_id'] ?? ''?>" readonly required>
+      </div>
+
+      <!-- Valeur pas récuperée mais sert seulement d'affichage -->
+      <div class="col-md-3 mb-3 ">
+            <label  class="form-label">Fournisseur</label>
+            <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" 
+             value="<?= $product['supplier'] ?? ''?>" readonly>
       </div>
 
       
@@ -78,7 +80,7 @@
          -->
         <select onchange="window.location.href='?action=supplier_order_create&selected_product_id=' + this.value"
         class="form-select bg-secondary text-white border-0 shadow-none" name="product_id" required>
-          <option>Sélectionner un produit</option>
+          <option value="">Sélectionner un produit</option>
           <?php foreach($product_list as $product): ?>
           <option value="<?=$product['product_id']?>" 
           <?= $selected_product_id == $product['product_id'] ? 'selected' : '';?>>
