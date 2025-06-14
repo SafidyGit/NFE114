@@ -23,8 +23,5 @@
       <li class="nav-item mb-2">
         <a class="nav-link text-light" href="index.php?action=supplier_order_list">🏭 Liste des commandes</a>
       </li>
-      <li class="nav-item mb-2">
-        <a class="nav-link text-light" href="#">⚙️ Paramètres</a>
-      </li>
     </ul>
 </aside>

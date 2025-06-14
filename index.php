@@ -152,6 +152,9 @@ switch ($action) {
     case 'supplier_order_edit':
         $supplierOrderController->edit();
         break;
+    case 'supplier_order_validate':
+        $supplierOrderController->validate();
+        break;
 
     default:
         // Récupère ou définit le code d'état de réponse HTTP. 

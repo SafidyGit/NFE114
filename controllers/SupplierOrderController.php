@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../models/SupplierOrder.php';
 require_once __DIR__ . '/../models/SupplierOrderDetail.php';
 require_once __DIR__ . '/../models/Supplier.php';
@@ -36,10 +35,12 @@ class SupplierOrderController
 
     public function create()
     {
+        
         // Recuperer l'id du produit via le select , null si id n'existe pas
         $selected_product_id = $_GET['selected_product_id'] ?? null;
         // Recup de l'id de produit pour pouvoir recup le prix dans un value
         $product = $this->productModel->getById($selected_product_id);
+        
 
         $next_supplier_order_id = $this->supplierOrderModel->get_last_id_supplier_order() + 1;
         $supplier_list = $this->supplierModel->get_all_supplier();
@@ -127,6 +128,41 @@ class SupplierOrderController
         }
     }
 
+
+    public function validate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $supplier_order_id = $_GET['id'];
+            // recuperer le supplier order detail dans l'url de post
+            $supplier_order_detail_id = $_GET['sod_id']; 
+
+            // Recuperer le supplier order detail avec l'id $supplier_order_detail_id
+            $order_detail = $this->supplierOrderDetailModel->getById($supplier_order_detail_id);
+
+            // Recuperer le product_id via l'url
+            $product_id = $_GET['product_id'];
+            $product = $this->productModel->getById($product_id);
+            // Calcul de la quantité 
+            $new_quantity_stock = $product['product_quantity_stock'] + $order_detail['so_quantity'];
+
+            // appel de la fonction pour modifier le statut dans supllierorder 
+            $this->supplierOrderModel->update_supplier_order_status($supplier_order_id, 'Livrée');
+
+            // Appel à la fonction update_product_from_supplier_order() dans models/supplierOrder.php
+            // Mise à jour de la quantité en stock / recuperation du prix, pas de modification
+            $this->supplierOrderModel->update_product_from_supplier_order(
+                $product_id , 
+                $new_quantity_stock, 
+                $product['product_unit_price'], 
+            );
+
+            header('Location: index.php?action=supplier_order_list');
+            exit;
+            } else {
+                header('Location: index.php?action=supplier_order_list');
+            
+            }
+    }    
     
     public function edit()
     {
@@ -135,6 +171,8 @@ class SupplierOrderController
 
         require __DIR__ . '/../views/admin/supplier_order/update.php';
     }
+
+
 
 
 

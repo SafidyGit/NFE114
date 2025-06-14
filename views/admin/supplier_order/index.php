@@ -39,9 +39,9 @@
                 <?php if($supplier_order['supplier_order_status'] === 'Livrée'):?>
                     <button class="btn btn-sm btn-success">Livrée</button>
                 <?php else:?>
-                <a href="index.php?action=supplier_order_edit&id=<?= $supplier_order['supplier_order_id'];?>">
-                    <button class="btn btn-sm btn-warning">Valider</button>
-                </a>
+                <form method='POST' action="index.php?action=supplier_order_validate&id=<?= $supplier_order['supplier_order_id'];?>&product_id=<?=$supplier_order['product_id']?>&sod_id=<?=$supplier_order['supplier_order_detail_id']?>" onsubmit="return confirm('Voulez-vous vraiment valider l\'entrée de <?=$supplier_order['so_quantity']?>  <?=$supplier_order['product_name']?>?');" class="d-inline-block m-0 p-0">
+                    <input class="btn btn-warning btn-sm" title="Valider"  type="submit" value="Valider">
+                </form>
                 <?php endif;?>
             </td>
         </tr>

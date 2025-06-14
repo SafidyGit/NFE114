@@ -15,17 +15,15 @@
     <div class="row">
       <div class="col-md-3 mb-3">
         <label for="supplier_order_reference" class="form-label">Référence de la commande</label>
-        <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_order_reference" required>
+        <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_order_reference" value="<?=$supplier_order['supplier_order_reference']?>" readonly required>
       </div>
 
       <div class="col-md-3 mb-3">
             <label for="supplier_id" class="form-label">Fournisseur</label>
             <!-- Le prix change en fontion du produit selectionné sur le select <label for="product_id" class="form-label">Produit</label>  -->
             <input type="number" class="form-control bg-secondary text-white border-0 shadow-none" 
-            name="supplier_id" value="<?= $product['supplier_id'] ?? ''?>" required>
+            name="supplier_id" value="<?=$supplier_order['supplier_id']?>" readonly required>
       </div>
-
-      
       <div class="col-md-3 mb-3">
         <label for="supplier_order_status" class="form-label">Status de la commande</label>
         <select class="form-select bg-secondary text-white border-0 shadow-none" name="supplier_order_status" required>
