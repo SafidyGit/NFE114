@@ -1,66 +1,70 @@
-
 <section class="mt-5">
-  <div class="row">
-    <div class="col">
-      <div class="btn-group dropend">
+<!-- Formulaire de filtre par catégorie -->
+<form method="GET" action="index.php">
+  <input type="hidden" name="action" value="dashboard">
+  <label>Filtrer par catégorie :</label>
+  <select name="categorie" onchange="this.form.submit()" class="btn btn-secondary dropdown-toggle filter">
+     <option value="">Choisir</option>
+      <option value="">-- Toutes --</option>
+      <?php foreach($categories as $categorie): ?>
+          <option value="<?= $categorie['category_id']; ?>"><?= $categorie['category']; ?></option>
+      <?php endforeach; ?>
+  </select>
+</form>
+
+ <form method="POST" action="index.php?action=selection_produits">
+   <?php 
+        // Affichage du message d'erreur s'il existe en session
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger w-50 m-auto mt-3 text-center alert-dismissible fade show" role="alert">' 
+         . htmlspecialchars($_SESSION['error']) . 
+         ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         
-        <?php if(!empty($categories)):?>
-          <form method="GET" action="">
-        <label>Filtrer par catégorie :</label>
-          <select name="categorie" onchange="this.form.submit()" class="btn btn-secondary dropdown-toggle filter">
-            <option value="">Choisir</option>
-            <option value="">-- Toutes --</option>
-            <?php foreach($categories as $categories) : ?>
-            <option value="<?= $categories['category_id']; ?>"><?= $categories['category']; ?></option>
-            <?php endforeach; ?>
-          </select>
-          
-        </form>
-        <?php endif;?>
-        
-      </div>
-    </div>
+    unset($_SESSION['error']);
+}
+        ?>
     <div class="col text-end">
-    <button type="submit" class="btn btn-warning btn-lg px-4 btn-valider">Valider</button>
+        <button type="submit" class="btn btn-warning btn-lg px-4 btn-valider">Passer à la commande</button>
     </div>
-  </div>
- 
+
   <div class="tablerounededCorner">
-  <table class="table table-hover mt-3 text-center table-bordered table-striped roundedTable">
-      <thead>
-          <tr>
-            <th scope="col">Reference</th>
-            <th scope="col">Categorie</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prix(€)</th>
-            <th scope="col">Stock</th>
-            <th scope="col">Ajouter</th>
-            <th scope="col">Quantité</th>
-          </tr>
-        </thead>
-        <?php if(!empty($products)):?>
-        <tbody>
-        <?php foreach($products as $product) : ?>
-          <tr>
-          <td><?= $product['product_reference']; ?></td>
-          <td><?= $product['category']; ?></td>
-          <td><?= $product['product_name']; ?></td>
-          <td><?= $product['product_unit_price']; ?></td>
-          <td><?= $product['product_quantity_stock']; ?></td>
-          
-            <td>
-              <input type="checkbox" name="add" id="">
-            </td>
-            <td>
-              <input class="quantity-product" type="number" name="quantity" id="" value="1">
-            </td>
-          </tr>
-          
+    <?php if (!empty($products)) : ?>
+
+        <table class="table table-hover mt-3 text-center table-bordered table-striped roundedTable">
+          <thead>
+            <tr>
+              <th>Référence</th>
+              <th>Catégorie</th>
+              <th>Nom</th>
+              <th>Prix (€)</th>
+              <th>Stock</th>
+              <th>Ajouter</th>
+              <th>Quantité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($products as $product): ?>
+            <tr>
+              <td><?= htmlspecialchars($product['product_reference']) ?></td>
+              <td><?= htmlspecialchars($product['category']) ?></td>
+              <td><?= htmlspecialchars($product['product_name']) ?></td>
+              <td><?= number_format($product['product_unit_price'], 2) ?></td>
+              <td><?= (int)$product['product_quantity_stock'] ?></td>
+              <td>
+                <input type="checkbox" name="products[<?= $product['product_id'] ?>][selected]" value="1">
+              </td>
+              <td>
+                <input type="number" name="products[<?= $product['product_id'] ?>][quantity]" value="1" min="1">
+              </td>
+            </tr>
           <?php endforeach; ?>
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+     
+    
     <?php else : ?>
       <p class="text-center mt-3">Aucun produit trouvé.</p>
-<?php endif;?>
-</div>
+    <?php endif; ?>
+  </div>
+    </form>
 </section>

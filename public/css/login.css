@@ -23,5 +23,7 @@ body{
 }
 .btn{
     border-radius:10rem;
-    .bs-btn-hover-bg: #efd073c4;
 }
+/* .bs-btn-hover-bg{
+    background-color:#efd073c4;
+} */

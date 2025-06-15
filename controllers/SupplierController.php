@@ -2,25 +2,35 @@
 
 require_once __DIR__ . '/../models/Supplier.php';
 
-class SupplierController {
+class SupplierController 
+{
+    private Supplier $supplierModel;
+
+    public function __construct(Supplier $supplierModel)
+    {
+        $this->supplierModel = $supplierModel;
+    }
 
     public function index() 
     {
-        $supplierModel = new Supplier();
-        $categories = $supplierModel->get_all_supplier();
+        $suppliers = $this->supplierModel->get_all_supplier();
 
-        return $categories;
+        require __DIR__ . '/../views/admin/supplier/index.php';
     }
 
     public function get_supplier_by_id($id)
     {
-        $supplierModel = new Supplier();
-        $supplier = $supplierModel->getById($id);
+        $supplier = $this->supplierModel->getById($id);
 
         return $supplier;
     }
 
-    public function create() 
+    public function create()
+    {
+        require __DIR__ . '/../views/admin/supplier/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $supplier = trim(htmlspecialchars($_POST['supplier']));
@@ -28,8 +38,12 @@ class SupplierController {
             $supplier_phone_number = trim(htmlspecialchars($_POST['supplier_phone_number']));
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
-            $supplierModel = new Supplier();
-            $supplierModel->add_supplier($supplier, $supplier_address, $supplier_phone_number, $supplier_email);
+            $this->supplierModel->add_supplier(
+                $supplier, 
+                $supplier_address, 
+                $supplier_phone_number, 
+                $supplier_email
+            );
 
             header('Location: views/admin/supplier/create.php?success=1');
             exit;
@@ -39,6 +53,14 @@ class SupplierController {
         }
     }
     
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $supplier = $this->get_supplier_by_id($id);
+
+        require __DIR__ . '/../views/admin/supplier/update.php';
+    }
+
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -49,13 +71,18 @@ class SupplierController {
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
 
-            $supplierModel = new Supplier();
-            $supplierModel->update_supplier($supplier_id , $supplier, $supplier_address, $supplier_phone_number, $supplier_email);
+            $this->supplierModel->update_supplier(
+                $supplier_id , 
+                $supplier, 
+                $supplier_address, 
+                $supplier_phone_number, 
+                $supplier_email
+            );
 
-            header('Location: views/admin/supplier/index.php');
+            header('Location: /index.php?action=supplier_list');
             exit;
         } else {
-            require 'views/admin/supplier/update.php';
+            require 'index.php?action=supplier_list';
         
         }
     }
@@ -64,13 +91,12 @@ class SupplierController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $supplier_id = $_GET['id'];
 
-            $supplierModel = new Supplier();
-            $supplierModel->delete_supplier($supplier_id);
+            $this->supplierModel->delete_supplier($supplier_id);
 
-            header('Location: views/admin/supplier/index.php');
+            header('Location: /index.php?action=supplier_list');
             exit;
         } else {
-            require 'views/admin/supplier/index.php';
+            require '/index.php?action=supplier_list';
         }
     }
     

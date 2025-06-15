@@ -2,13 +2,20 @@
 require_once './models/User.php';
 
 class AuthController {
+
+    private User $userModel;
+
+    public function __construct(User $userModel)
+    {
+        $this->userModel = $userModel;
+    }
+
     public function login(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = htmlspecialchars($_POST['email']);
             $password = $_POST['password'];
 
-            $userModel = new User();
-            $user = $userModel->findByEmail($email);
+            $user = $this->userModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
               
@@ -18,14 +25,14 @@ class AuthController {
                 $_SESSION['role_id'] = $user['role_id'];
 
                 if ($_SESSION['role_id'] != 2) {
-                    header('Location: views/admin/dashboard.php');
+                    header('Location: index.php?action=admin_dashboard');
                 }else {
-                    header('Location: views/employe/dashboard.php');
+                    header('Location:  index.php?action=dashboard');
                 }
                 exit;
             } else {
                
-                $error = "Email ou mot de passe incorrect, Veuillez réessayer !";
+                $error = "Email ou mot de passe incorrect";
                 require 'views/auth/login.php';
             }
         } else {

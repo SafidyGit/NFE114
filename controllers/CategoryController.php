@@ -4,30 +4,39 @@ require_once __DIR__ . '/../models/Category.php';
 
 class CategoryController {
 
+    private Category $categoryModel;
+
+    public function __construct(Category $categoryModel)
+    {
+        $this->categoryModel = $categoryModel;
+    }
+
     public function index() 
     {
-        $categoryModel = new Category();
-        $categories = $categoryModel->get_all_category();
+        $categories = $this->categoryModel->get_all_category();
 
-        return $categories;
+        require __DIR__ . '/../views/admin/category/index.php';
     }
 
     public function get_category_by_id($id)
     {
-        $categoryModel = new Category();
-        $category = $categoryModel->getById($id);
+        $category = $this->categoryModel->getById($id);
 
         return $category;
     }
 
-    public function create() 
+    public function create()
+    {
+        require __DIR__ . '/../views/admin/category/create.php';
+    }
+
+    public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($_POST['category'] == !null){
                 $category = trim(htmlspecialchars($_POST['category']));
                 
-                $categoryModel = new Category();
-                $categoryModel->add_category($category);
+                $this->categoryModel->add_category($category);
 
                 header('Location: views/admin/category/create.php?success=1');
                 exit;
@@ -40,19 +49,27 @@ class CategoryController {
         
         }
     }
+
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $category = $this->get_category_by_id($id);
+
+        require __DIR__ . '/../views/admin/category/update.php';
+    }
+
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $category_id = $_GET['id'];
             $category = trim(htmlspecialchars($_POST['category']));
            
-            $categoryModel = new Category();
-            $categoryModel->update_category($category_id , $category);
+            $this->categoryModel->update_category($category_id , $category);
 
-            header('Location: views/admin/category/index.php');
+            header('Location: index.php?action=category_list');
             exit;
         } else {
-            require 'views/admin/category/update.php';
+            require __DIR__ . '/../index.php?action=category_list';
         
         }
     }
@@ -61,13 +78,12 @@ class CategoryController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $category_id = $_GET['id'];
 
-            $categoryModel = new Category();
-            $categoryModel->delete_category($category_id);
+            $this->categoryModel->delete_category($category_id);
 
-            header('Location: views/admin/category/index.php');
+            header('Location: index.php?action=category_list');
             exit;
         } else {
-            require 'views/admin/category/index.php';
+            require __DIR__ . '/../index.php?action=category_list';
         }
     }
     
