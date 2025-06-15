@@ -18,6 +18,15 @@ class CustomerOrder
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     }
+    // Changement de statut des commandes 
+    public function updateOrderStatus($orderId, $newStatus)
+    {
+        $sql = "UPDATE customerorder SET customer_order_status = :status WHERE customer_order_id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':status' => $newStatus,
+            ':id' => $orderId
+        ]);
 
     public function getById($customer_order_id)
     {
