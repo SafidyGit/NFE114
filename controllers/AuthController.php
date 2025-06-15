@@ -27,16 +27,16 @@ class AuthController {
                 if ($_SESSION['role_id'] != 2) {
                     header('Location: index.php?action=admin_dashboard');
                 }else {
-                    header('Location: views/employe/dashboard.php');
+                    header('Location: index.php?action=dashboard');
                 }
                 exit;
             } else {
                
                 $error = "Email ou mot de passe incorrect";
-                require 'views/auth/login.php';
+                header('Location: index.php?action=login');
             }
-        } else {
-           
+        }
+         else {
             require 'views/auth/login.php';
         }
     }

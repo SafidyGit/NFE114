@@ -128,7 +128,7 @@ class SupplierOrderController
         }
     }
 
-
+    // Validation des commandes en attente
     public function validate()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

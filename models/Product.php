@@ -155,7 +155,7 @@ class Product
     }
 
 
-    //  For employe expedition
+    //  Pour la partie employé
     public function getByCategory($category_id)
     {
         $sql = "SELECT * FROM product 
@@ -182,8 +182,15 @@ class Product
         $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    public function updateStock($productId, $newQuantity)
+    {
+        $sql = "UPDATE product SET product_quantity_stock = :qty WHERE product_id = :pid";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':qty' => $newQuantity, ':pid' => $productId]);
+    }
 }
+
+
 
 ?>
 

@@ -11,6 +11,7 @@ class SupplierController
         $this->supplierModel = $supplierModel;
     }
 
+    // Recuperer la liste des fournisseurs
     public function index() 
     {
         $suppliers = $this->supplierModel->get_all_supplier();
@@ -18,6 +19,7 @@ class SupplierController
         require __DIR__ . '/../views/admin/supplier/index.php';
     }
 
+    // Rechercher un fournisseur par son identifiant
     public function get_supplier_by_id($id)
     {
         $supplier = $this->supplierModel->getById($id);
@@ -25,11 +27,13 @@ class SupplierController
         return $supplier;
     }
 
+    // rediriger vers le formulaire de création de fournisseur
     public function create()
     {
         require __DIR__ . '/../views/admin/supplier/create.php';
     }
 
+    // Envoyer la requete post pour enregistrer un fournisseur
     public function store() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,6 +57,7 @@ class SupplierController
         }
     }
     
+    // Acceder à un formulaire de modification d'un formulaire
     public function edit()
     {
         $id = $_GET['id'];
@@ -61,6 +66,7 @@ class SupplierController
         require __DIR__ . '/../views/admin/supplier/update.php';
     }
 
+    // Requete post pour update un fournisseur
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,7 +76,7 @@ class SupplierController
             $supplier_phone_number = trim(htmlspecialchars($_POST['supplier_phone_number']));
             $supplier_email = trim(htmlspecialchars($_POST['supplier_email']));
            
-
+            // Appel de la fonction pour enregistrer les modifications dans fournisseurs
             $this->supplierModel->update_supplier(
                 $supplier_id , 
                 $supplier, 

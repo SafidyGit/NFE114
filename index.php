@@ -8,6 +8,11 @@ require_once __DIR__ . '/models/Supplier.php';
 require_once __DIR__ . '/models/SupplierOrder.php';
 require_once __DIR__ . '/models/SupplierOrderDetail.php';
 
+require_once __DIR__ . '/models/Customer.php';
+require_once __DIR__ . '/models/CustomerOrder.php';
+require_once __DIR__ . '/models/CustomerOrderDetail.php';
+require_once __DIR__ . '/models/StockMovement.php';
+
 $userModel = new User();
 $roleModel = new Role();
 $productModel = new Product();
@@ -16,6 +21,10 @@ $supplierModel = new Supplier();
 $supplierOrderModel = new SupplierOrder();
 $supplierOrderDetailModel = new SupplierOrderDetail();
 
+$customerModel = new Customer();
+$customerOrderModel = new CustomerOrder();
+$customerOrderDetailModel = new CustomerOrderDetail();
+$stockMovementModel = new StockMovement();
 
 // CONTROLLERS
 require_once __DIR__ . '/controllers/AuthController.php';
@@ -25,6 +34,7 @@ require_once __DIR__ . '/controllers/CategoryController.php';
 require_once __DIR__ . '/controllers/ProductController.php';
 require_once __DIR__ . '/controllers/SupplierController.php';
 require_once __DIR__ . '/controllers/SupplierOrderController.php';
+require_once __DIR__ . '/controllers/CustomerOrderController.php';
 
 $authController = new AuthController($userModel);
 $userController = new UserController($userModel, $roleModel);
@@ -33,7 +43,7 @@ $productController = new ProductController($productModel, $categoryModel, $suppl
 $categoryController = new CategoryController($categoryModel);
 $supplierController = new SupplierController($supplierModel);
 $supplierOrderController = new SupplierOrderController($supplierOrderModel, $supplierModel, $productModel, $supplierOrderDetailModel);
-
+$coCtrl = new CustomerOrderController($customerModel, $productModel, $customerOrderModel, $customerOrderDetailModel, $stockMovementModel);
 
 // ROUTING
 // Prendre la valeur '' si pas d'action récupérée.
@@ -56,6 +66,11 @@ switch ($action) {
     // Admin Dashboard
     case 'admin_dashboard':
         $adminDashboardController->index();
+        break;
+    
+    // Dashboard employé
+    case 'dashboard':
+        $productController->dashboard();
         break;
 
     // Action sur les Users
@@ -152,6 +167,30 @@ switch ($action) {
     case 'supplier_order_validate':
         $supplierOrderController->validate();
         break;
+
+
+
+    //Action sur la partie Employé
+    
+    case 'search_products':
+        $productController->searchProducts();
+        break;
+    case 'confirm_order':
+        $coCtrl->confirm_order();
+        break;
+    case 'submit_order':
+        $coCtrl->submit_order();
+        break;
+    case 'list_orders':
+        $coCtrl->listOrders();
+        break;
+    case 'selection_produits':
+        $productController->selectionProduits();
+        break;
+    case 'mark_as_delivered':
+        $coCtrl->markAsDelivered();
+        break;
+
 
     default:
         // Récupère ou définit le code d'état de réponse HTTP. 

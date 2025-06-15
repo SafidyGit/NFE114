@@ -52,7 +52,7 @@ class ProductController
         // Vérifie si une requete POST à été executée
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // assignation des valeurs insérées dans les champs(input) du formulaire dans des variables
-            // La fonction trim() permet de supprimer les espaces 
+            // La fonction trim() permet de supprimer les espaces superfloues
             // htmlspecialchars() protège contre les injections XSS
             $product_reference = trim(htmlspecialchars($_POST['product_reference']));
             $product_name = trim(htmlspecialchars($_POST['product_name']));
@@ -86,11 +86,14 @@ class ProductController
 
     public function edit()
     {
+        // Recuperation de la valeur de id et le produit
         $id = $_GET['id'];
         $product = $this->get_product_by_id($id);
 
+        // recuperer la liste des categories
         $category_list = $this->categoryModel->get_all_category();
 
+        // recuperer la liste des fournisseurs
         $supplier_list = $this->supplierModel->get_all_supplier();
 
         require __DIR__ . '/../views/admin/product/update.php';
@@ -143,35 +146,98 @@ class ProductController
     }
     
 
-    // For employe expedition
+    
+    // Pour employé : récupérer les produits selon la catégorie
     public function get_products_by_category($category_id)
     {
         return $this->productModel->getByCategory($category_id);
     }
 
-    // public function dashboard()
-    // {
-        
-    // $categoryController = new CategoryController();
-    // $categories = $categoryController->index();
+    // Dashboard pour employé : liste des produits + filtre par catégorie
+    public function dashboard()
+    {
+        $categories = $this->categoryModel->get_all_category(); 
 
-    // $categoryId = $_GET['categorie'] ?? '';
+        $searchTerm = $_GET['search'] ?? '';
+        $categoryId = $_GET['categorie'] ?? '';
 
-    // if ($categoryId !== '') {
-    //     // Récupérer les produits filtrés
-    //     $products = $this->get_products_by_category($categoryId);
-    // } else {
-    //     // Récupérer tous les produits
-    //     $products = $this->index();
-    // }
-    //     // Charger la vue
-    //     require  __DIR__ . 'views/employe/dashboard.php';
-    // }
+        if (!empty($searchTerm)) {
+            $products = $this->productModel->searchByName($searchTerm);
+        } elseif (!empty($categoryId)) {
+            $products = $this->productModel->getByCategory($categoryId);
+        } else {
+            $products = $this->productModel->get_all_product(); 
+        }
 
-    // public function search_products($searchTerm)
-    // {
-    //     $productModel = new Product();
-    //     return $productModel->searchByName($searchTerm);
-    // }
+        require __DIR__ . '/../views/employe/dashboard.php';
+    }
+
+    // Recherche de produit par nom (depuis une barre de recherche par exemple)
+    public function searchProducts()
+    {
+       
+        if (isset($_GET['q']) && !empty($_GET['q'])) {
+            $searchTerm = trim(htmlspecialchars($_GET['q']));
+            $products = $this->productModel->searchByName($searchTerm);
+        } else {
+            $products = $this->productModel->get_all_product();
+        }
+
+        require __DIR__ . '/../views/employe/dashboard.php';
+    }
+
+   public function selectionProduits()
+    {
+          session_start();
+        if (!isset($_POST['products']) || empty($_POST['products'])) {
+            $_SESSION['error'] = "Aucun produit sélectionné.";
+            header('Location: index.php?action=dashboard');
+            exit;
+        }
+
+        $productsInput = $_POST['products'];
+        $selected = [];
+
+        foreach ($productsInput as $product_id => $info) {
+            // Vérifie que le checkbox est coché
+            if (isset($info['selected']) && $info['selected'] == '1') {
+                $quantity = isset($info['quantity']) && $info['quantity'] > 0 ? (int)$info['quantity'] : 1;
+
+                // Récupérer le produit complet depuis la base
+                $productData = $this->productModel->getById($product_id);
+
+                if ($productData) {
+                    // Vérifie si stock <= 0
+                if ($productData['product_quantity_stock'] <= 0) {
+                    $_SESSION['error'] = "Le produit '{$productData['product_name']}' est en rupture de stock.";
+                    header('Location: index.php?action=dashboard');
+                    exit;
+                }
+
+                // Vérifie si quantité demandée > stock dispo
+                if ($quantity > $productData['product_quantity_stock']) {
+                    $_SESSION['error'] = "La quantité demandée pour '{$productData['product_name']}' est supérieure au stock disponible ({$productData['product_quantity_stock']}).";
+                    header('Location: index.php?action=dashboard');
+                    exit;
+                }
+                    $selected[] = [
+                        'product_id' => $productData['product_id'],
+                        'product_name' => $productData['product_name'],
+                        'product_unit_price' => $productData['product_unit_price'],
+                        'quantity' => $quantity,
+                    ];
+                }
+            }
+        }
+
+        if (empty($selected)) {
+            $_SESSION['error'] = "Aucun produit sélectionné valide.";
+            header('Location: index.php?action=dashboard');
+            exit;
+        }
+
+        // Passer la variable à la vue confirm_order.php
+        include __DIR__ . '/../views/employe/order/confirm_order.php';
+    }
 
 }

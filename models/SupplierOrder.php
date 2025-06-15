@@ -111,7 +111,6 @@ class SupplierOrder
             ':product_quantity_stock' => $product_quantity_stock, 
             ':product_unit_price' => $product_unit_price, 
             ':product_id' => $product_id
-
         ]);
     }
 

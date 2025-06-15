@@ -18,6 +18,18 @@ class CustomerOrder
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     }
+    // Changement de statut des commandes 
+    public function updateOrderStatus($orderId, $newStatus)
+    {
+
+        $sql = "UPDATE customerorder SET customer_order_status = :status WHERE customer_order_id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':status' => $newStatus,
+            ':id' => $orderId
+        ]);
+    }
+    
 
     public function getById($customer_order_id)
     {
@@ -28,18 +40,24 @@ class CustomerOrder
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function add_customer_order($customer_order_reference, $customer_order_date, $customer_order_status, $customer_id) 
+     public function add_customer_order($customer_order_reference, $customer_order_date, $customer_order_status, $customer_id) 
     {
-        $sql = "INSERT INTO customerorder (customer_order_reference, customer_order_date, customer_order_status, customer_id) VALUES (:customer_order_reference, :customer_order_date, :customer_order_status, :customer_id )";
+        $sql = "INSERT INTO customerorder (customer_order_reference, customer_order_date, customer_order_status, customer_id) 
+                VALUES (:customer_order_reference, :customer_order_date, :customer_order_status, :customer_id)";
 
         $stmt = $this->db->prepare($sql);
-
-        return $stmt->execute([
+        $success = $stmt->execute([
             ':customer_order_reference' => $customer_order_reference,
             ':customer_order_date' => $customer_order_date,
             ':customer_order_status' => $customer_order_status,
             ':customer_id' => $customer_id,
         ]);
+
+        if ($success) {
+            return $this->db->lastInsertId();  // Retourne l’ID inséré
+        } else {
+            return false;  // En cas d’erreur
+        }
     }
 
     public function update_customer_order($customer_order_id , $customer_order_reference, $customer_order_date, $customer_order_status, $customer_id) 
@@ -62,6 +80,29 @@ class CustomerOrder
         $sql = "DELETE FROM customerorder WHERE customer_order_id = :customer_order_id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':customer_order_id' => $customer_order_id]);
+    }
+
+    // requête pour afficher la liste des clients partie employé
+     public function get_customer_order_list()
+    {
+        $sql = "
+        SELECT 
+            co.customer_order_id,
+            co.customer_order_reference,
+            co.customer_order_date,
+            co.customer_order_status,
+            c.customer AS customer_name
+        FROM 
+            customerorder co
+        JOIN 
+            customer c ON co.customer_id = c.customer_id
+        ORDER BY 
+            co.customer_order_date DESC
+    ";
+        $stmt = $this->db->query($sql);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
     }
 
 }
