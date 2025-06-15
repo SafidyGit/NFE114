@@ -27,6 +27,22 @@ class CustomerOrder
             ':status' => $newStatus,
             ':id' => $orderId
         ]);
+    }
+    //
+    public function get_order_with_customer($orderId)
+    {
+        $sql = "SELECT co.*, c.customer, c.customer_address, c.customer_phone_number, c.customer_email
+                FROM customerorder co
+                JOIN customer c ON co.customer_id = c.customer_id
+                WHERE co.customer_order_id = :orderId";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':orderId' => $orderId]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    //
+
 
     public function getById($customer_order_id)
     {
@@ -94,13 +110,39 @@ class CustomerOrder
         JOIN 
             customer c ON co.customer_id = c.customer_id
         ORDER BY 
-            co.customer_order_date DESC
+            co.customer_order_id DESC
     ";
         $stmt = $this->db->query($sql);
+        
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     }
+
+    public function get_customer_order_by_id($orderId)
+{
+    $sql = "
+        SELECT 
+            co.customer_order_id,
+            co.customer_order_reference,
+            co.customer_order_date,
+            co.customer_order_status,
+            c.customer AS customer_name
+        FROM 
+            customerorder co
+        JOIN 
+            customer c ON co.customer_id = c.customer_id
+        WHERE 
+            co.customer_order_id = :orderId
+        LIMIT 1
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':orderId' => $orderId]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC); // une seule commande
+}
+
 
 }
 

@@ -9,38 +9,49 @@
 </head>
 <body>
 <?php
-  // Obtenir le nom du fichier courant 
- $currentPage = $_GET['action'] ?? ''; // si action n'existe pas, ça vaut ''
- $isLoggedIn = isset($_SESSION['user_id']);
+// Récupère l'action courante depuis l'URL (ex: dashboard, list_orders)
+// Si aucune action n'est définie, $currentPage est une chaîne vide
+$currentPage = $_GET['action'] ?? '';
+
+// Vérifie si un utilisateur est connecté (user_id défini en session)
+$isLoggedIn = isset($_SESSION['user_id']);
+
+// Vérifie si l'utilisateur connecté est un administrateur (role_id == 1)
 $isAdmin = $isLoggedIn && $_SESSION['role_id'] == 1;
 ?>
+
 <nav class="navbar bg-dark fixed-top ">
   <div class="container">
+    <!-- Lien vers la page dashboard -->
     <a class="navbar-brand" href="index.php?action=dashboard">Acces</a>
+
     <ul class="nav  justify-content-center">
+      <!-- Onglet Expedition, actif si $currentPage vaut 'dashboard' -->
       <li class="nav-item">
         <a class="nav-link <?php echo ($currentPage == 'dashboard') ? 'active' : ''; ?>" aria-current="page" href="index.php?action=dashboard">Expedition</a>
       </li>
+      <!-- Onglet Commande, actif si $currentPage vaut 'list_orders' -->
       <li class="nav-item">
         <a class="nav-link <?php echo ($currentPage == 'list_orders') ? 'active' : ''; ?>" href="index.php?action=list_orders">Commande</a>
       </li>
     </ul>
+
     <div class="dropdown d-flex">
-    <button class="btn btn-outline-dark logout dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-   <?php echo $_SESSION['username']; ?>
-  </button>
-        <ul class="dropdown-menu">
-          <?php if ($isAdmin): ?>
-        <!-- Lien visible uniquement pour l'administrateur -->
-        <li><a class="dropdown-item" href="index.php?action=admin_dashboard">Dashboard</a></li>
-      <?php endif; ?>
-            <li><a class="dropdown-item" href="index.php?action=logout">Se déconnecter</a></li>
-        </ul>
+      <!-- Bouton affichant le nom d'utilisateur avec menu déroulant -->
+      <button class="btn btn-outline-dark logout dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <?php echo $_SESSION['username']; ?>
+      </button>
+      <ul class="dropdown-menu">
+        <?php if ($isAdmin): ?>
+          <!-- Lien vers dashboard admin visible uniquement pour les admins -->
+          <li><a class="dropdown-item" href="index.php?action=admin_dashboard">Dashboard</a></li>
+        <?php endif; ?>
+        <!-- Lien de déconnexion toujours visible -->
+        <li><a class="dropdown-item" href="index.php?action=logout">Se déconnecter</a></li>
+      </ul>
     </div>
-    
   </div>
 </nav>
 
-
 <div class="container container-employe">
-<!-- Contenu dashboard ici -->
+<!-- Ici s’affichera le contenu spécifique au dashboard employé -->

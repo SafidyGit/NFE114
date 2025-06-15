@@ -7,9 +7,11 @@ class Product
     private $db;
 
     public function __construct() {
+        // Initialise la connexion PDO à la base de données via la classe Database singleton
         $this->db = Database::getInstance()->getConnection();
     }
 
+    // Récupère tous les produits avec leurs fournisseurs et catégories associés
     public function get_all_product()
     {
         $sql = "SELECT * FROM product 
@@ -20,11 +22,11 @@ class Product
 
         $stmt = $this->db->query($sql);
         
+        // Retourne un tableau associatif de tous les produits
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
     }
 
-    // Methode qui retourne le nombre total des produits en stock
+    // Retourne la somme totale des quantités en stock pour tous les produits
     public function count_all_product_in_stock()
     {
         $sql = "SELECT SUM(product_quantity_stock) FROM product";
@@ -35,7 +37,7 @@ class Product
         return (int)$count;
     }
 
-    // Nombre de produit épuisé
+    // Retourne le nombre de produits dont la quantité en stock est nulle (épuisé)
     public function out_of_stock_count()
     {
         $sql = "SELECT COUNT(product_reference) 
@@ -47,7 +49,7 @@ class Product
         return (int)$out_of_stock;
     }
 
-    // Nombre de produit en dessous du seuil
+    // Retourne le nombre de produits dont la quantité en stock est inférieure ou égale au seuil d'alerte (mais > 0)
     public function product_alert_stock()
     {
         $sql = "SELECT COUNT(product_reference) 
@@ -61,6 +63,7 @@ class Product
         return (int)$alert_stock;
     }
 
+    // Retourne le total des quantités de produits groupé par catégorie
     public function totalProductsByCategory()
     {
         $sql = "SELECT category.category, 
@@ -71,11 +74,9 @@ class Product
 
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
-
-
+    // Récupère un produit spécifique par son ID avec son fournisseur associé
     public function getById($product_id)
     {
         $sql = "SELECT * 
@@ -88,6 +89,7 @@ class Product
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Ajoute un nouveau produit dans la base de données
     public function add_product($product_reference, $product_name,
      $product_description, $product_quantity_stock,
       $product_alert_threshold, $product_unit_price, 
@@ -116,6 +118,7 @@ class Product
         ]);
     }
 
+    // Met à jour un produit existant par son ID
     public function update_product($product_id , $product_reference, 
     $product_name, $product_description, $product_quantity_stock, 
     $product_alert_threshold, $product_unit_price, $supplier_id, $category_id) 
@@ -143,10 +146,10 @@ class Product
             ':supplier_id' => $supplier_id, 
             ':category_id' => $category_id,
             ':product_id' => $product_id
-
         ]);
     }
 
+    // Supprime un produit par son ID
     public function delete_product($product_id) 
     {
         $sql = "DELETE FROM product WHERE product_id = :product_id";
@@ -154,9 +157,8 @@ class Product
         return $stmt->execute([':product_id' => $product_id]);
     }
 
-
-    //  For employe expedition 
-    public function getByCategory($category_id) // requête pour selectionné les produis par catégorie (utile pour le filtre)
+    // Pour l'employé d'expédition : récupère les produits d'une catégorie spécifique
+    public function getByCategory($category_id) 
     {
         $sql = "SELECT * FROM product 
                 JOIN supplier ON product.supplier_id = supplier.supplier_id
@@ -170,7 +172,8 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function searchByName($searchTerm) // requête pour chercher les produits par leur noms ou les lettres qui les composent (utile pour la barre de recherche)
+    // Recherche les produits par nom (contient la chaîne de recherche)
+    public function searchByName($searchTerm) 
     {
         $sql = "SELECT * FROM product 
                 JOIN supplier ON product.supplier_id = supplier.supplier_id 
@@ -183,7 +186,8 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     public function updateStock($productId, $newQuantity) // requête pour mettre à jour la quantité d'un produit en stock
+    // Met à jour la quantité en stock d'un produit donné
+    public function updateStock($productId, $newQuantity) 
     {
         $sql = "UPDATE product SET product_quantity_stock = :qty WHERE product_id = :pid";
         $stmt = $this->db->prepare($sql);
@@ -193,4 +197,3 @@ class Product
 }
 
 ?>
-

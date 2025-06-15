@@ -72,6 +72,21 @@ class CustomerOrderDetail
         return $stmt->execute([':customer_order_detail_id' => $customer_order_detail_id]);
     }
 
+    public function get_order_details($orderId)
+{
+    $sql = "SELECT cod.co_quantity, cod.selling_price, p.product_name, p.product_reference
+            FROM customerorderdetail cod
+            JOIN product p ON cod.product_id = p.product_id
+            WHERE cod.customer_order_id = :orderId";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':orderId' => $orderId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 }
 
 ?>

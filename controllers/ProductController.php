@@ -143,48 +143,65 @@ class ProductController
     }
     
     // Pour employé : récupérer les produits selon la catégorie via la méthode getByCategory dans le models Product
+
+    // Affiche la liste des produits filtrés par catégorie (pour le filtre du dashboard)
     public function get_products_by_category($category_id)
     {
         return $this->productModel->getByCategory($category_id);
     }
 
-    // Dashboard pour employé : liste des produits + filtre par catégorie
+    // Dashboard pour employé : liste des produits avec possibilité de filtrer par catégorie ou rechercher par nom
     public function dashboard()
     {
+        // Récupère toutes les catégories disponibles
         $categories = $this->categoryModel->get_all_category(); 
 
+        // Récupère les paramètres de recherche depuis l'URL
         $searchTerm = $_GET['search'] ?? '';
         $categoryId = $_GET['categorie'] ?? '';
 
+        // Si une recherche est saisie, on filtre par nom
         if (!empty($searchTerm)) {
             $products = $this->productModel->searchByName($searchTerm);
-        } elseif (!empty($categoryId)) {
+        } 
+        // Sinon si une catégorie est sélectionnée, on filtre par catégorie
+        elseif (!empty($categoryId)) {
             $products = $this->productModel->getByCategory($categoryId);
-        } else {
+        } 
+        // Sinon, on récupère tous les produits
+        else {
             $products = $this->productModel->get_all_product(); 
         }
 
+        // Affiche la vue dashboard avec les produits
         require __DIR__ . '/../views/employe/dashboard.php';
     }
 
-    // Recherche de produit par nom (depuis une barre de recherche)
+    // Recherche de produit par nom (depuis la barre de recherche)
     public function searchProducts()
     {
-       
+        // Vérifie si une recherche a été envoyée via GET
         if (isset($_GET['q']) && !empty($_GET['q'])) {
+            // Nettoie le terme recherché
             $searchTerm = trim(htmlspecialchars($_GET['q']));
+            // Recherche les produits correspondants
             $products = $this->productModel->searchByName($searchTerm);
-        } else {
+        } 
+        // Si aucun terme, afficher tous les produits
+        else {
             $products = $this->productModel->get_all_product();
         }
 
+        // Affiche les résultats sur la vue dashboard
         require __DIR__ . '/../views/employe/dashboard.php';
     }
-    
-    // Choisir les produits à commander
-   public function selectionProduits()
+
+    // Choisir les produits à commander (étape de sélection depuis le dashboard)
+    public function selectionProduits()
     {
-          session_start();
+        session_start();
+
+        // Si aucun produit n'est sélectionné, retourner au dashboard avec erreur
         if (!isset($_POST['products']) || empty($_POST['products'])) {
             $_SESSION['error'] = "Aucun produit sélectionné.";
             header('Location: index.php?action=dashboard');
@@ -195,27 +212,30 @@ class ProductController
         $selected = [];
 
         foreach ($productsInput as $product_id => $info) {
-            // Vérifie que le checkbox est coché
+            // Vérifie que le checkbox du produit est bien coché
             if (isset($info['selected']) && $info['selected'] == '1') {
+                // Si une quantité > 0 est fournie, on la prend, sinon on met 1 par défaut
                 $quantity = isset($info['quantity']) && $info['quantity'] > 0 ? (int)$info['quantity'] : 1;
 
-                // Récupérer le produit complet depuis la base
+                // Récupère les informations complètes du produit en base
                 $productData = $this->productModel->getById($product_id);
 
                 if ($productData) {
-                    // Vérifie si stock <= 0
-                if ($productData['product_quantity_stock'] <= 0) {
-                    $_SESSION['error'] = "Le produit '{$productData['product_name']}' est en rupture de stock.";
-                    header('Location: index.php?action=dashboard');
-                    exit;
-                }
+                    // Vérifie si le produit est en rupture de stock
+                    if ($productData['product_quantity_stock'] <= 0) {
+                        $_SESSION['error'] = "Le produit '{$productData['product_name']}' est en rupture de stock.";
+                        header('Location: index.php?action=dashboard');
+                        exit;
+                    }
 
-                // Vérifie si quantité demandée > stock dispo
-                if ($quantity > $productData['product_quantity_stock']) {
-                    $_SESSION['error'] = "La quantité demandée pour '{$productData['product_name']}' est supérieure au stock disponible ({$productData['product_quantity_stock']}).";
-                    header('Location: index.php?action=dashboard');
-                    exit;
-                }
+                    // Vérifie si la quantité demandée est supérieure au stock disponible
+                    if ($quantity > $productData['product_quantity_stock']) {
+                        $_SESSION['error'] = "La quantité demandée pour '{$productData['product_name']}' est supérieure au stock disponible ({$productData['product_quantity_stock']}).";
+                        header('Location: index.php?action=dashboard');
+                        exit;
+                    }
+
+                    // Ajoute le produit à la sélection
                     $selected[] = [
                         'product_id' => $productData['product_id'],
                         'product_name' => $productData['product_name'],
@@ -226,14 +246,16 @@ class ProductController
             }
         }
 
+        // Si aucun produit sélectionné ou valide, erreur
         if (empty($selected)) {
             $_SESSION['error'] = "Aucun produit sélectionné valide.";
             header('Location: index.php?action=dashboard');
             exit;
         }
 
-        // Passer la variable à la vue confirm_order.php
+        // Passe les produits sélectionnés à la vue confirm_order.php
         include __DIR__ . '/../views/employe/order/confirm_order.php';
     }
+
 
 }

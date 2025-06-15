@@ -30,22 +30,25 @@ class Customer
 
     public function add_customer($customer, $customer_address, $customer_phone_number, $customer_email) 
     {
-        $sql = "INSERT INTO customer (customer, customer_address, customer_phone_number, customer_email) VALUES (:customer, :customer_address, :customer_phone_number, :customer_email )";
+        $sql = "INSERT INTO customer (customer, customer_address, customer_phone_number, customer_email) 
+                VALUES (:customer, :customer_address, :customer_phone_number, :customer_email)";
 
         $stmt = $this->db->prepare($sql);
 
-        return $stmt->execute([
+        $success = $stmt->execute([
             ':customer' => $customer,
             ':customer_address' => $customer_address,
             ':customer_phone_number' => $customer_phone_number,
             ':customer_email' => $customer_email,
         ]);
+
         if ($success) {
-        return $this->db->lastInsertId();  // L’id du client inséré
+            return $this->db->lastInsertId();  // retourne l’ID du client inséré
         } else {
-            return false;
+            return false; // échec de l’insertion
         }
     }
+
 
     public function update_customer($customer_id , $customer, $customer_address, $customer_phone_number, $customer_email) 
     {

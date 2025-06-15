@@ -165,28 +165,45 @@ switch ($action) {
         break;
 
     //Action sur la partie Employé
-    case 'dashboard': // affichage dans dashboard employé
+     case 'dashboard': 
+        // Affiche le tableau de bord de l'employé avec les produits, etc.
         $productController->dashboard();
         break;
-    case 'search_products': // recherche de produit sur la barre de recherche
+
+    case 'search_products': 
+        // Recherche des produits via la barre de recherche dans le dashboard employé
         $productController->searchProducts();
         break;
-    case 'confirm_order': // confirmer une commande
+
+    case 'confirm_order': 
+        // Affiche la page de confirmation d'une commande avec les produits sélectionnés
         $coCtrl->confirm_order();
         break;
-    case 'submit_order': // enregistrer une commande
+
+    case 'submit_order': 
+        // Traite et enregistre la commande soumise par l'employé
         $coCtrl->submit_order();
         break;
-    case 'list_orders': // lister les commandes
+
+    case 'list_orders': 
+        // Affiche la liste des commandes passées par l'employé
         $coCtrl->listOrders();
         break;
-    case 'selection_produits': // Choisirs les produits à commander
+
+    case 'selection_produits': 
+        // Permet à l'employé de sélectionner les produits à commander
         $productController->selectionProduits();
         break;
-    case 'mark_as_delivered': // Changer le statut d'une commande: de en cours à
+
+    case 'mark_as_delivered': 
+        // Change le statut d'une commande, par exemple de "En cours" à "Livré"
         $coCtrl->markAsDelivered();
         break;
 
+    case 'order_details': 
+        // Affiche le détail complet d'une commande spécifique
+        $coCtrl->orderdetail();
+        break;
 
     default:
         // Récupère ou définit le code d'état de réponse HTTP. 
