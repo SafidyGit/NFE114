@@ -158,31 +158,34 @@ switch ($action) {
         $supplierOrderController->create();
         break;
     case 'supplier_order_store':
-        $supplierOrderController->update_product_from_supplierOrder();
+        $supplierOrderController->store();
+        break;
+    case 'supplier_order_validate':
+        $supplierOrderController->validate();
         break;
 
     //Action sur la partie Employé
-    case 'dashboard':
+    case 'dashboard': // affichage dans dashboard employé
         $productController->dashboard();
         break;
-    case 'search_products':
+    case 'search_products': // recherche de produit sur la barre de recherche
         $productController->searchProducts();
         break;
-    case 'confirm_order':
+    case 'confirm_order': // confirmer une commande
         $coCtrl->confirm_order();
         break;
-    case 'submit_order':
+    case 'submit_order': // enregistrer une commande
         $coCtrl->submit_order();
         break;
-    case 'list_orders':
+    case 'list_orders': // lister les commandes
         $coCtrl->listOrders();
         break;
-    case 'selection_produits':
+    case 'selection_produits': // Choisirs les produits à commander
         $productController->selectionProduits();
         break;
-    case 'mark_as_delivered':
-    $coCtrl->markAsDelivered();
-    break;
+    case 'mark_as_delivered': // Changer le statut d'une commande: de en cours à
+        $coCtrl->markAsDelivered();
+        break;
 
 
     default:

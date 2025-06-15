@@ -27,7 +27,7 @@ class AuthController {
                 if ($_SESSION['role_id'] != 2) {
                     header('Location: index.php?action=admin_dashboard');
                 }else {
-                    header('Location:  index.php?action=dashboard');
+                    header('Location: index.php?action=dashboard');
                 }
                 exit;
             } else {

@@ -36,7 +36,6 @@ body{
 }
 h1{
     color: #d3aa2f;
-    text-align: center;
 }
 .btn-valider{
     border-radius: 2rem;
@@ -64,9 +63,3 @@ h1{
     margin: 0;
 }
 /*  */
-.formCustomer{
-    margin: 1rem;
-    border-radius: 2rem;
-    box-shadow: 0px 2px 7px black; 
-    border-color:#dcc17170
-}

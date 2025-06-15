@@ -30,10 +30,10 @@ class CustomerOrderDetail
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-   
-    public function add_customer_order_detail($co_quantity, $selling_price, $product_id, $customer_order_id, $user_id) 
+    // Ajouter les détails d'une commande 
+    public function add_customer_order_detail($co_quantity, $selling_price, $product_id, $customer_order_id,$user_id) 
     {
-        $sql = "INSERT INTO customerorderdetail (co_quantity, selling_price, product_id, customer_order_id, user_id) 
+       $sql = "INSERT INTO customerorderdetail (co_quantity, selling_price, product_id, customer_order_id, user_id) 
                 VALUES (:co_quantity, :selling_price, :product_id, :customer_order_id, :user_id)";
         $stmt = $this->db->prepare($sql);
 
@@ -45,9 +45,6 @@ class CustomerOrderDetail
             ':user_id' => $user_id,
         ]);
     }
-
-    
-    
 
     public function update_customer_order($customer_order_detail_id , 
     $co_quantity, $selling_price, $product_id, $customer_order_id) 

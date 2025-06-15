@@ -14,7 +14,6 @@ class ProductController
         $this->productModel = $productModel;
         $this->categoryModel = $categoryModel;
         $this->supplierModel = $supplierModel;
-        
     }
 
     public function index() 
@@ -78,11 +77,10 @@ class ProductController
             );
 
             // Redirection vers la page create.php avec un message de succès
-            header('Location: views/admin/product/create.php?success=1');
+            header('Location: index.php?action=product_create&success=1');
             exit;
         } else {
-            require 'views/admin/product/create.php';
-        
+            header('Location: index.php?action=product_create');
         }
     }
 
@@ -144,8 +142,7 @@ class ProductController
         }
     }
     
-
-    // Pour employé : récupérer les produits selon la catégorie
+    // Pour employé : récupérer les produits selon la catégorie via la méthode getByCategory dans le models Product
     public function get_products_by_category($category_id)
     {
         return $this->productModel->getByCategory($category_id);
@@ -170,7 +167,7 @@ class ProductController
         require __DIR__ . '/../views/employe/dashboard.php';
     }
 
-    // Recherche de produit par nom (depuis une barre de recherche par exemple)
+    // Recherche de produit par nom (depuis une barre de recherche)
     public function searchProducts()
     {
        
@@ -183,7 +180,8 @@ class ProductController
 
         require __DIR__ . '/../views/employe/dashboard.php';
     }
-
+    
+    // Choisir les produits à commander
    public function selectionProduits()
     {
           session_start();
@@ -237,8 +235,5 @@ class ProductController
         // Passer la variable à la vue confirm_order.php
         include __DIR__ . '/../views/employe/order/confirm_order.php';
     }
-
-   
-
 
 }

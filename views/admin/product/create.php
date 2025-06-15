@@ -39,17 +39,17 @@
 
       <div class="col-md-6 mb-3">
         <label for="product_quantity_stock" class="form-label">Quantité</label>
-        <input type="number" step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_quantity_stock" required>
+        <input type="number" min=1 step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_quantity_stock" required>
       </div>
 
       <div class="col-md-6 mb-3">
         <label for="product_alert_threshold" class="form-label">Seuil d'alerte</label>
-        <input type="number" step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_alert_threshold" required>
+        <input type="number" min=1 step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_alert_threshold" required>
       </div>
 
       <div class="col-md-6 mb-3">
         <label for="product_unit_price" class="form-label">Prix unitaire (€)</label>
-        <input type="number" step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_unit_price" required>
+        <input type="number" min=1 step="0.01" class="form-control bg-secondary text-white border-0 shadow-none" name="product_unit_price" required>
       </div>
 
       <div class="col-md-6 mb-3">

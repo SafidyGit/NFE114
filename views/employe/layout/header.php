@@ -10,7 +10,9 @@
 <body>
 <?php
   // Obtenir le nom du fichier courant 
-  $currentPage = basename($_SERVER['PHP_SELF']);
+ $currentPage = $_GET['action'] ?? ''; // si action n'existe pas, ça vaut ''
+ $isLoggedIn = isset($_SESSION['user_id']);
+$isAdmin = $isLoggedIn && $_SESSION['role_id'] == 1;
 ?>
 <nav class="navbar bg-dark fixed-top ">
   <div class="container">
@@ -25,9 +27,13 @@
     </ul>
     <div class="dropdown d-flex">
     <button class="btn btn-outline-dark logout dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Name
+   <?php echo $_SESSION['username']; ?>
   </button>
         <ul class="dropdown-menu">
+          <?php if ($isAdmin): ?>
+        <!-- Lien visible uniquement pour l'administrateur -->
+        <li><a class="dropdown-item" href="index.php?action=admin_dashboard">Dashboard</a></li>
+      <?php endif; ?>
             <li><a class="dropdown-item" href="index.php?action=logout">Se déconnecter</a></li>
         </ul>
     </div>

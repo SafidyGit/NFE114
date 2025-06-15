@@ -1,16 +1,19 @@
 <?php
+// Vérifie que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    header('Location: /index.php?action=login');
-    exit;
-}
-if ($_SESSION['role_id'] != 2) {
-    echo "Accès refusé.";
+    $_SESSION['error'] = "Vous devez être connecté pour passer une commande.";
+    header('Location: index.php?action=login');
     exit;
 }
 
+// Vérifie que l'utilisateur a le bon rôle (employé OU admin)
+if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
+    $_SESSION['error'] = "Accès non autorisé.";
+    header('Location: index.php?action=dashboard');
+    exit;
+}
 include __DIR__ . '/../layout/header.php';
 ?>
-
 <h1>Validation commande</h1>
 
 <form method="POST" action="index.php?action=submit_order">

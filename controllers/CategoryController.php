@@ -38,14 +38,14 @@ class CategoryController {
                 
                 $this->categoryModel->add_category($category);
 
-                header('Location: views/admin/category/create.php?success=1');
+                header('Location: index.php?action=category_create&success=1');
                 exit;
             } else{
                 echo 'Champs obligatoire';
             }
             
         } else {
-            require 'views/admin/category/create.php';
+            header('Location: index.php?action=category_create');
         
         }
     }
@@ -69,7 +69,7 @@ class CategoryController {
             header('Location: index.php?action=category_list');
             exit;
         } else {
-            require __DIR__ . '/../index.php?action=category_list';
+            header('Location: index.php?action=category_list');
         
         }
     }
@@ -83,7 +83,7 @@ class CategoryController {
             header('Location: index.php?action=category_list');
             exit;
         } else {
-            require __DIR__ . '/../index.php?action=category_list';
+            header('Location: index.php?action=category_list');
         }
     }
     

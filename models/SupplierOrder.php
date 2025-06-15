@@ -12,24 +12,26 @@ class SupplierOrder
 
     public function get_all_supplier_order()
     {
-
-                $sql = "SELECT 
-                supplierorderdetail.so_quantity, 
-                supplierorderdetail.purchase_price,
-                supplierorder.supplier_order_date, 
-                supplierorder.supplier_order_reference,
-                supplierorder.supplier_order_status, 
-                supplier.supplier,
-                product.product_name, 
-                (supplierorderdetail.so_quantity * supplierorderdetail.purchase_price) AS 'total_price'
-                FROM supplierorder
-                JOIN supplierorderdetail 
-                ON supplierorder.supplier_order_id = supplierorderdetail.supplier_order_id
-                JOIN supplier 
-                ON supplierorder.supplier_id = supplier.supplier_id
-                LEFT JOIN product 
-                ON supplierorderdetail.product_id = product.product_id
-                ORDER BY supplierorder.supplier_order_id DESC";
+        $sql = "SELECT 
+        supplierorderdetail.supplier_order_detail_id, 
+        supplierorderdetail.so_quantity, 
+        supplierorderdetail.purchase_price,
+        supplierorder.supplier_order_id, 
+        supplierorder.supplier_order_date, 
+        supplierorder.supplier_order_reference,
+        supplierorder.supplier_order_status, 
+        supplier.supplier,
+        product.product_id, 
+        product.product_name, 
+        (supplierorderdetail.so_quantity * supplierorderdetail.purchase_price) AS 'total_price'
+        FROM supplierorder
+        JOIN supplierorderdetail 
+        ON supplierorder.supplier_order_id = supplierorderdetail.supplier_order_id
+        JOIN supplier 
+        ON supplierorder.supplier_id = supplier.supplier_id
+        LEFT JOIN product 
+        ON supplierorderdetail.product_id = product.product_id
+        ORDER BY supplierorder.supplier_order_id DESC";
 
         $stmt = $this->db->query($sql);
         
@@ -112,6 +114,21 @@ class SupplierOrder
 
         ]);
     }
+
+    // pour Modifier le statut d'une commande via la validation d'une commande
+    public function update_supplier_order_status($supplier_order_id , $supplier_order_status)
+    {
+        $sql = "UPDATE supplierorder SET  
+        supplier_order_status = :supplier_order_status
+        WHERE supplier_order_id = :supplier_order_id";
+
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':supplier_order_status' => $supplier_order_status,
+            ':supplier_order_id' => $supplier_order_id
+        ]);
+    } 
 
 
 }

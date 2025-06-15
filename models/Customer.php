@@ -28,24 +28,24 @@ class Customer
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-   public function add_customer($name, $address, $phone, $email)
-{
-    $sql = "INSERT INTO customer (customer, customer_address, customer_phone_number, customer_email)
-            VALUES (:customer, :customer_address, :customer_phone_number, :customer_email)";
-    $stmt = $this->db->prepare($sql);
-    $success = $stmt->execute([
-        ':customer' => $name,
-        ':customer_address' => $address,
-        ':customer_phone_number' => $phone,
-        ':customer_email' => $email,
-    ]);
-    if ($success) {
-        return $this->db->lastInsertId();  // L’id du client inséré
-    } else {
-        return false;
-    }
-}
+    public function add_customer($customer, $customer_address, $customer_phone_number, $customer_email) 
+    {
+        $sql = "INSERT INTO customer (customer, customer_address, customer_phone_number, customer_email) VALUES (:customer, :customer_address, :customer_phone_number, :customer_email )";
 
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':customer' => $customer,
+            ':customer_address' => $customer_address,
+            ':customer_phone_number' => $customer_phone_number,
+            ':customer_email' => $customer_email,
+        ]);
+        if ($success) {
+        return $this->db->lastInsertId();  // L’id du client inséré
+        } else {
+            return false;
+        }
+    }
 
     public function update_customer($customer_id , $customer, $customer_address, $customer_phone_number, $customer_email) 
     {
@@ -68,6 +68,7 @@ class Customer
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':customer_id' => $customer_id]);
     }
+    
 
 }
 

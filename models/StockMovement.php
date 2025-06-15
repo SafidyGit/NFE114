@@ -28,7 +28,8 @@ class StockMovement
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function add_stockmovement( $sm_type, $sm_date,$sm_quantity, $product_id) 
+    // Mise à jour de la table stockmovement
+    public function add_stockmovement($sm_type, $sm_date,$sm_quantity, $product_id) 
     {
         $sql = "INSERT INTO stockmovement ( sm_type, sm_date,sm_quantity, product_id) 
                 VALUES (:sm_type, :sm_date,:sm_quantity, :product_id )";
@@ -41,7 +42,6 @@ class StockMovement
             ':sm_quantity' => $sm_quantity,
             ':product_id' => $product_id,
         ]);
-         
     }
 
     public function update_stockmovement($sm_id , $stockmovement, $sm_type, $sm_date, $product_id) 

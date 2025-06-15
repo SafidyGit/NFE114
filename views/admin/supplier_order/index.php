@@ -8,8 +8,6 @@
     </button>
 
     <h3>Liste commandes</h3>
-    <!-- <a href="../../../index.php?action=product_create">Ajouter un produit</a> -->
-
 <div class="table-responsive bg-dark p-3 rounded shadow">
     <table class="table table-dark table-striped table-hover table-bordered mb-0">
     <thead>
@@ -22,6 +20,7 @@
         <th>Fournisseur</th>
         <th>prix (€)</th>
         <th>Montant (€)</th>
+        <th></th>
     </tr>
     </thead>
     <?php if(!empty($supplier_orders)):?>
@@ -36,6 +35,15 @@
             <td><?= $supplier_order['supplier']; ?></td>
             <td><?= $supplier_order['purchase_price']; ?></td>
             <td><?= $supplier_order['total_price']; ?></td>
+            <td>
+                <?php if($supplier_order['supplier_order_status'] === 'Livrée'):?>
+                    <button class="btn btn-sm btn-success">Livrée</button>
+                <?php else:?>
+                <form method='POST' action="index.php?action=supplier_order_validate&id=<?= $supplier_order['supplier_order_id'];?>&product_id=<?=$supplier_order['product_id']?>&sod_id=<?=$supplier_order['supplier_order_detail_id']?>" onsubmit="return confirm('Voulez-vous vraiment valider l\'entrée de <?=$supplier_order['so_quantity']?>  <?=$supplier_order['product_name']?>?');" class="d-inline-block m-0 p-0">
+                    <input class="btn btn-warning btn-sm" title="Valider"  type="submit" value="Valider">
+                </form>
+                <?php endif;?>
+            </td>
         </tr>
         
     <?php endforeach; ?>

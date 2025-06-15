@@ -78,7 +78,10 @@ class Product
 
     public function getById($product_id)
     {
-        $sql = "SELECT * FROM product WHERE product_id = :product_id";
+        $sql = "SELECT * 
+        FROM product 
+        JOIN supplier ON product.supplier_id = supplier.supplier_id
+        WHERE product_id = :product_id";
         
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['product_id' => $product_id]);
@@ -152,8 +155,8 @@ class Product
     }
 
 
-    //  Pour la partie employé
-    public function getByCategory($category_id)
+    //  For employe expedition 
+    public function getByCategory($category_id) // requête pour selectionné les produis par catégorie (utile pour le filtre)
     {
         $sql = "SELECT * FROM product 
                 JOIN supplier ON product.supplier_id = supplier.supplier_id
@@ -167,7 +170,7 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function searchByName($searchTerm)
+    public function searchByName($searchTerm) // requête pour chercher les produits par leur noms ou les lettres qui les composent (utile pour la barre de recherche)
     {
         $sql = "SELECT * FROM product 
                 JOIN supplier ON product.supplier_id = supplier.supplier_id 
@@ -179,12 +182,14 @@ class Product
         $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function updateStock($productId, $newQuantity)
+
+     public function updateStock($productId, $newQuantity) // requête pour mettre à jour la quantité d'un produit en stock
     {
         $sql = "UPDATE product SET product_quantity_stock = :qty WHERE product_id = :pid";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':qty' => $newQuantity, ':pid' => $productId]);
     }
+
 }
 
 ?>
