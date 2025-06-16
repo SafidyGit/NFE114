@@ -1,0 +1,72 @@
+body{
+    background: #1c2f3940;
+    
+}
+/* nav */
+.navbar{
+    background: #1c2f39 !important;
+    box-shadow: 0px 2px 7px black;
+}
+.navbar-brand{
+    color: #FFC107;
+    font-size: x-large;
+}
+.logout{
+    color: white !important;
+    font-size: large;
+    border-radius: 10rem;
+}
+.nav-link{
+    color: white;
+}
+.nav-link.active {
+    border-radius: 1rem;
+    border: 1px solid rgb(215, 190, 77);
+}
+.nav-link:hover{
+    color: #d3aa2f;
+}
+.nav-link.active:hover{
+    color: #d3aa2f !important;
+}
+/*  */
+/* expedition */
+.container-employe{
+    margin-top: 6rem;
+}
+h1{
+    color: #d3aa2f;
+    text-align: center;
+}
+.btn-valider{
+    border-radius: 2rem;
+    color: #151646;
+    font-weight: bold;
+}
+.filter{
+    border-radius: 2rem;
+}
+.quantity-product{
+    border-radius: 2rem;
+    text-align: center;
+    border: solid 1px #42425f;
+}
+/*  */
+/* table */
+.tablerounededCorner {
+    border-radius: 1rem;
+}
+.roundedTable {
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+}
+/*  */
+.formCustomer{
+    margin: 1rem;
+    border-radius: 2rem;
+    box-shadow: 0px 2px 7px black; 
+    border-color:#dcc17170
+}

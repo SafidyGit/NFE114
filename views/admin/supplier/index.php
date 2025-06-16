@@ -7,33 +7,35 @@
       ☰ Menu
     </button>
 
-    <h3>Liste des utilisateurs</h3>
-    <a href="index.php?action=user_create">Ajouter un utilisateur</a>
+    <h3>Liste des Fournisseurs</h3>
+    <a href="index.php?action=supplier_create">Ajouter un Fournisseur</a>
 
 <div class="table-responsive bg-dark p-3 rounded shadow">
     <table class="table table-dark table-striped table-hover table-bordered mb-0">
     <thead>
     <tr>
         <th>Id</th>
-        <th>Nom de l'utilisateur</th>
-        <th>Email</th>
-        <th>Role</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Numero de téléphone</th>
+        <th>Mail</th>
         <th>Actions</th>
     </tr>
     </thead>
-    <?php if(!empty($users)):?>
+    <?php if(!empty($suppliers)):?>
     <tbody>    
-    <?php foreach($users as $user) : ?>
+    <?php foreach($suppliers as $supplier) : ?>
         <tr>
-            <td><?= $user['user_id']; ?></td>
-            <td><?= $user['username']; ?></td>
-            <td><?= $user['user_email']; ?></td>
-            <td><?= $user['role_id']; ?> : <?= $user['role']; ?></td>
+            <td><?= $supplier['supplier_id']; ?></td>
+            <td><?= $supplier['supplier']; ?></td>
+            <td><?= $supplier['supplier_address']; ?></td>
+            <td><?= $supplier['supplier_phone_number']; ?></td>
+            <td><?= $supplier['supplier_email']; ?></td>
             <td class="d-flex align-items-center gap-2">
-                <a href="index.php?action=user_edit&id=<?= $user['user_id']?>&role=<?=$user['role_id']?>">
+                <a href="index.php?action=supplier_edit&id=<?= $supplier['supplier_id']?>">
                     <button class="btn btn-sm btn-primary">Modifier</button>
                 </a>
-                <form method='POST' action="index.php?action=user_delete&id=<?= $user['user_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ? <?= $user['user_id'];?>?');" class="d-inline-block m-0 p-0">
+                <form method='POST' action="index.php?action=supplier_delete&id=<?= $supplier['supplier_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ? <?= $supplier['supplier_id'];?>?');" class="d-inline-block m-0 p-0">
                     <input class="btn btn-danger btn-sm" title="Supprimer"  type="submit" value="X">
                 </form>
             </td>

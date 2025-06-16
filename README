@@ -1,0 +1,37 @@
+C'est une application de gestion de stock d'appareil informatique
+Voici les étapes à suivre pour pouvoir l'utiliser :
+    1 : Créer la base de données
+-Ouvrez phpMyAdmin ou un outil similaire.
+-Créez une nouvelle base de données, par exemple : nfe.
+-Importez le fichier nfe.sql fourni (situé dans le dossier du projet).
+
+    2 : Configuration de la connexion à la base de données
+-Ouvrez le fichier : config/database.php
+-Modifiez les variables suivantes selon votre configuration locale :
+    $host = 'localhost';         // Adresse du serveur MySQL
+    $dbname = 'nfe';             // Nom de la base de données
+    $username = 'root';          // Nom d'utilisateur MySQL
+    $password = '';              // Mot de passe MySQL
+
+    3 : Lancer l'application
+-Placez le dossier du projet dans le dossier www ou htdocs de votre serveur local (WAMP/XAMPP).
+-Ouvrez votre navigateur et allez à : http://localhost/nom_du_projet/
+-L'application devrait s’ouvrir avec l’écran de connexion.
+
+    4 : Connexion à l'application
+Deux interfaces utilisateurs sont disponibles :
+-Admin (admin@admin.com  test)
+-Employé (employe@employe.com   test1)
+
+    5 : Tester les fonctionnalités
+Naviguez dans l'application selon vos droits d’accès et explorez les fonctionnalités disponibles.
+Bonne navigation :) 
+
+
+_______Structure du code:
+Models:  contient les classes liées à la base de données.
+Controllers : contient la logique métier et gère les interactions entre les modèles et les vues.
+Views : contient les fichiers HTML avec du PHP pour afficher les données.
+Public: contient les fichiers accessibles au navigateur (CSS ici)
+config : contient les paramètres de connexion à la base de données 
+index.php : point d’entrée du site — il redirige les requêtes vers le bon contrôleur.
