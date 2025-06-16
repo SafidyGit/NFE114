@@ -35,7 +35,7 @@
 
       <div class="col-md-6 mb-3">
         <label for="user_email" class="form-label">Email</label>
-        <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="user_email" value="<?=$user['user_email']?>" required>
+        <input type="email" class="form-control bg-secondary text-white border-0 shadow-none" name="user_email" value="<?=$user['user_email']?>" required>
       </div>
       
       <div class="col-md-6 mb-3">

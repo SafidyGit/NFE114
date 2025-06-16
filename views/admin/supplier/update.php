@@ -31,7 +31,7 @@
 
       <div class="col-md-6 mb-3">
         <label for="supplier_email" class="form-label">Mail</label>
-        <input type="text" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_email" value="<?=$supplier['supplier_email']?>" required>
+        <input type="email" class="form-control bg-secondary text-white border-0 shadow-none" name="supplier_email" value="<?=$supplier['supplier_email']?>" required>
       </div>
 
     </div> 
