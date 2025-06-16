@@ -3,7 +3,7 @@ require_once './models/User.php';
 
 class AuthController {
 
-    // Attribut pour stocker l'instance du modèle User
+    // Attribut pour stocker l'instance du modèle User 
     private User $userModel;
 
     // Constructeur : injection du modèle User
@@ -16,7 +16,7 @@ class AuthController {
     public function login(){
         // Vérifie si la requête est envoyée en POST (formulaire soumis)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Nettoyage des données entrées par l'utilisateur
+            // les données entrées par l'utilisateur
             $email = htmlspecialchars($_POST['email']);
             $password = $_POST['password'];
 

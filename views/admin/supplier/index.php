@@ -35,7 +35,7 @@
                 <a href="index.php?action=supplier_edit&id=<?= $supplier['supplier_id']?>">
                     <button class="btn btn-sm btn-primary">Modifier</button>
                 </a>
-                <form method='POST' action="/index.php?action=supplier_delete&id=<?= $supplier['supplier_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ? <?= $supplier['supplier_id'];?>?');" class="d-inline-block m-0 p-0">
+                <form method='POST' action="index.php?action=supplier_delete&id=<?= $supplier['supplier_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ? <?= $supplier['supplier_id'];?>?');" class="d-inline-block m-0 p-0">
                     <input class="btn btn-danger btn-sm" title="Supprimer"  type="submit" value="X">
                 </form>
             </td>

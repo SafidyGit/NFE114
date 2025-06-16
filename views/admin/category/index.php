@@ -29,7 +29,7 @@
                 <a href="index.php?action=category_edit&id=<?= $category['category_id']?>">
                 <button class="btn btn-sm btn-primary">Modifier</button>
                 </a>
-                <form method='POST' action="/index.php?action=category_delete&id=<?= $category['category_id']?>" onsubmit="return confirm('Voulez-vous vraiment modifier cette catégorie <?= $category['category_id'];?>?');">
+                <form method='POST' action="index.php?action=category_delete&id=<?= $category['category_id']?>" onsubmit="return confirm('Voulez-vous vraiment modifier cette catégorie <?= $category['category_id'];?>?');">
                 <button class="btn btn-sm btn-danger">Supprimer</button>
                 </form>
             </td>

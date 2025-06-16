@@ -33,7 +33,7 @@
                 <a href="index.php?action=user_edit&id=<?= $user['user_id']?>&role=<?=$user['role_id']?>">
                     <button class="btn btn-sm btn-primary">Modifier</button>
                 </a>
-                <form method='POST' action="/index.php?action=user_delete&id=<?= $user['user_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ? <?= $user['user_id'];?>?');" class="d-inline-block m-0 p-0">
+                <form method='POST' action="index.php?action=user_delete&id=<?= $user['user_id']?>" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ? <?= $user['user_id'];?>?');" class="d-inline-block m-0 p-0">
                     <input class="btn btn-danger btn-sm" title="Supprimer"  type="submit" value="X">
                 </form>
             </td>

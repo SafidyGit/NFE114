@@ -58,11 +58,13 @@
                 <td><?= htmlspecialchars($product['product_name']) ?></td>
                 <td><?= number_format($product['product_unit_price'], 2) ?></td>
                 <!-- Affiche la quantité en stock en rouge si sous le seuil d'alerte -->
-                <?php if ($product['product_quantity_stock'] <= $product['product_alert_threshold']) : ?>
-                    <td style="color:red"><?= (int)$product['product_quantity_stock'] ?></td>
-                <?php else : ?>
-                    <td><?= (int)$product['product_quantity_stock'] ?></td>
-                <?php endif; ?>
+               <?php if ($product['product_quantity_stock'] == 0) : ?>
+                  <td style="color: red; font-weight: bold;">Épuisé</td>
+              <?php elseif ($product['product_quantity_stock'] <= $product['product_alert_threshold']) : ?>
+                  <td style="color: orange; font-weight: bold;"><?= (int)$product['product_quantity_stock'] ?></td>
+              <?php else : ?>
+                  <td><?= (int)$product['product_quantity_stock'] ?></td>
+              <?php endif; ?>
 
                 <!-- Case à cocher pour sélectionner le produit -->
                 <td>
